@@ -10,7 +10,7 @@ public class CaixaMultibancoApplication {
 		
 		SpringApplication.run(CaixaMultibancoApplication.class, args);
 		System.out.println("Hello Word");
-		System.out.println("Meu nome é Allan");
+		System.out.println("Meu nome é AllanN");
 	}
 
 }
