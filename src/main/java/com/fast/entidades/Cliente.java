@@ -1,4 +1,4 @@
-package com.fast.caixaMultibanco;
+package com.fast.entidades;
 
 import java.time.LocalDate;
 
