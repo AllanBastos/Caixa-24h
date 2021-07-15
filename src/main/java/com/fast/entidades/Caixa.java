@@ -71,6 +71,16 @@ public class Caixa {
 		}	
 	}
 	
+	
+	
+	public Integer getCodigo_caixa() {
+		return codigo_caixa;
+	}
+
+//	private void setCodigo_caixa(Integer codigo_caixa) {
+//		this.codigo_caixa = codigo_caixa;
+//	}
+
 	private boolean validarQuantidade(int qtd_cedulas) {
 		if ( qtd_cedulas <= MAX_CEDULAS & qtd_cedulas >= 0) {			
 			return true;

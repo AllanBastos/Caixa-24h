@@ -45,4 +45,38 @@ public class Cliente {
 		this.telefone_cliente = telefone_cliente;
 	}
 
+	public String getLogin() {
+		return login;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public int getCodigo_banco() {
+		return codigo_banco;
+	}
+
+	public String getNome_banco() {
+		return nome_banco;
+	}
+
+	public String getConta() {
+		return conta;
+	}
+
+	public Double getSaldo() {
+		return saldo;
+	}
+
+	public String getAcesso() {
+		return acesso;
+	}
+
+	public LocalDate getDt_acesso() {
+		return dt_acesso;
+	}
+	
+	
+
 }
