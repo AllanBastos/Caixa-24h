@@ -8,14 +8,14 @@ import java.time.LocalDate;
  * @version 0.0.4
  */
 
-
 public class Cliente {
 	// Atributos
+	
+	
 	private String nome_cliente; // Obrigatório.
 	private String telefone_cliente; // Opcional.
 	private String login; // Obrigatório.
 	private String senha; // Obrigatório, Criptografar com MD5.
-
 	private int codigo_banco; // Obrigatório - consultar a tabela BACEN (3 numeros);
 	private String nome_banco; // [Obrigatório]
 	private String conta; // [Obrigatório]
