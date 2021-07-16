@@ -2,6 +2,12 @@ package com.fast.caixaMultibanco.Model;
 
 import java.util.Date;
 
+/**
+ * Classe Entidade Banco
+ * @author allan
+ * @version 0.0.2
+ */
+
 public class Banco {
 	
 	private int ISPB;
@@ -12,7 +18,7 @@ public class Banco {
 	private String nome_extenso;
 	private Date inicio_da_operacao;
 	
-	
+
 	public Banco(int iSPB, String nome_reduzido, Integer codigo, String compe, String acesso_principal,
 			String nome_extenso, Date inicio_da_operacao) {
 		super();
