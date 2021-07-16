@@ -1,6 +1,9 @@
-package com.fast.caixaMultibanco.Model;
+package com.fast.caixaMultibanco.Entities;
 
 import java.util.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
  * Classe Entidade Banco
@@ -8,16 +11,28 @@ import java.util.Date;
  * @version 0.0.2
  */
 
+@Entity
 public class Banco {
 	
-	private int ISPB;
-	private String nome_reduzido;
+	@Id
 	private Integer codigo;
+	private Integer ISPB;
+	private String nome_reduzido;
 	private String compe;
 	private String acesso_principal;
 	private String nome_extenso;
 	private Date inicio_da_operacao;
 	
+	
+
+	/**
+	 * 
+	 */
+	public Banco() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 
 	public Banco(int iSPB, String nome_reduzido, Integer codigo, String compe, String acesso_principal,
 			String nome_extenso, Date inicio_da_operacao) {

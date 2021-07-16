@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.fast.caixaMultibanco.controller;
+package com.fast.caixaMultibanco.resources;
 
 import java.util.HashMap;
 

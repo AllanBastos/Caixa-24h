@@ -1,4 +1,4 @@
-package com.fast.caixaMultibanco.Model;
+package com.fast.caixaMultibanco.Entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,7 +12,7 @@ import com.fast.caixaMultibanco.exception.EntitiesException;
 /**
  * Classe Caixa
  * @author allan
- * @version 0.0.4
+ * @version 0.0.5
  */
 
 //Código_caixa: gerado automáticamente;
@@ -29,16 +29,12 @@ public class Caixa {
 	@Column(name="codigo", nullable = false)
 	private Integer codigo_caixa; //Código_caixa: gerado automáticamente;
 	
-	@Column(nullable = false)
 	private int qtd_cedulas_2;
 	
-	@Column(nullable = false)
 	private int qtd_cedulas_5;
 	
-	@Column(nullable = false)
 	private int qtd_cedulas_10;
 	
-	@Column(nullable = false)
 	private int qtd_cedulas_50;
 	
 
@@ -121,8 +117,8 @@ public class Caixa {
 	 * @param qtd_cedulas_50 the qtd_cedulas_50 to set
 	 */
 	public void setQtd_cedulas_50(int qtd_cedulas_50) {
-		if(validarQuantidade(qtd_cedulas_50)) {
-			this.qtd_cedulas_5 = qtd_cedulas_50;
+		if(validarQuantidade(qtd_cedulas_10)) {
+			this.qtd_cedulas_50 = qtd_cedulas_50;
 		}else {
 			throw new EntitiesException("Quantidades de cedulas invalidas");
 		}	

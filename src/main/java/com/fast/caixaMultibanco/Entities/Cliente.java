@@ -1,6 +1,9 @@
-package com.fast.caixaMultibanco.Model;
+package com.fast.caixaMultibanco.Entities;
 
 import java.time.LocalDate;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
  * Classe Cliente, entidade que representa o cliente de um banco
@@ -8,13 +11,14 @@ import java.time.LocalDate;
  * @version 0.0.4
  */
 
+@Entity
 public class Cliente {
 	// Atributos
 	
-	
+	@Id
+	private String login; // Obrigatório.
 	private String nome_cliente; // Obrigatório.
 	private String telefone_cliente; // Opcional.
-	private String login; // Obrigatório.
 	private String senha; // Obrigatório, Criptografar com MD5.
 	private int codigo_banco; // Obrigatório - consultar a tabela BACEN (3 numeros);
 	private String nome_banco; // [Obrigatório]
@@ -22,6 +26,17 @@ public class Cliente {
 	private Double saldo; // [Obrigatório] valor decimal com o saldo da conta do cliente;
 	private String acesso; // código temporário para operações (alfanumérico de 64 caracteres).
 	private LocalDate dt_acesso; // data e hora da geração do acesso.
+	
+	
+	
+	/**
+	 * 
+	 */
+	public Cliente() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 
 	// Construtor
 	public Cliente(String nome_cliente, String telefone_cliente, String login, String senha, int codigo_banco,
