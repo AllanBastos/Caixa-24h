@@ -1,4 +1,6 @@
-package com.fast.entidades;
+package com.fast.caixaMultibanco.Model;
+
+import com.fast.caixaMultibanco.exception.EntitiesException;
 
 //Código_caixa: gerado automáticamente;
 

@@ -1,4 +1,4 @@
-package com.fast.entidades;
+package com.fast.caixaMultibanco.Model;
 
 import java.util.Date;
 
