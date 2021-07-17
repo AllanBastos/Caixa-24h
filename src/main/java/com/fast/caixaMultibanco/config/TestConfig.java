@@ -1,6 +1,8 @@
 package com.fast.caixaMultibanco.config;
 
-import java.sql.Date;
+
+
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -25,17 +27,26 @@ public class TestConfig implements CommandLineRunner {
 	@Autowired
 	private ClienteRepository clienteRepository;
 	
+	
 	@Override
 	public void run(String... args) throws Exception {
-		Banco banco = new Banco(00000000, "BCO DO BRASIL S.A.", 001, "Sim", "RSFN", "Banco do Brasil S.A.", Date.valueOf("2002-04-22"));
+		Banco banco = new Banco(00000000, "BCO DO BRASIL S.A.", 001, "Sim", "RSFN", "Banco do Brasil S.A.", java.sql.Date.valueOf("2002-04-22"));
 		Caixa caixa = new Caixa(200, 200, 150, 200);
 		Cliente cliente = new Cliente("Allan", "(74)99971-8965", "allan.teste", "1052", banco.getCodigo(), banco.getNome_extenso(), "2021001",(double) 1000);
 //		
+		Date dataAtual = new Date();
+		cliente.setDt_acesso();
+		
 		bancoRepository.save(banco);
 		caixaRepository.save(caixa);
 		clienteRepository.save(cliente);
 		
+		System.out.println(cliente.getDt_acesso());
 		
+
+		if (dataAtual.before(cliente.getDt_acesso())) {
+			System.out.println("Ainda tem tempo");
+		}
 		
 	}
 

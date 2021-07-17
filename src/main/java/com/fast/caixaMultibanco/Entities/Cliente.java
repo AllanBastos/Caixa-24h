@@ -1,6 +1,9 @@
 package com.fast.caixaMultibanco.Entities;
 
-import java.time.LocalDate;
+
+import java.text.ParseException;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -14,6 +17,7 @@ import javax.persistence.Id;
 @Entity
 public class Cliente {
 	// Atributos
+
 	
 	@Id
 	private String login; // Obrigatório.
@@ -25,7 +29,7 @@ public class Cliente {
 	private String conta; // [Obrigatório]
 	private Double saldo; // [Obrigatório] valor decimal com o saldo da conta do cliente;
 	private String acesso; // código temporário para operações (alfanumérico de 64 caracteres).
-	private LocalDate dt_acesso; // data e hora da geração do acesso.
+	private Date dt_acesso; // data e hora da geração do acesso.
 	
 	
 	
@@ -137,9 +141,20 @@ public class Cliente {
 	/**
 	 * @return the date and time of the access generation
 	 */
-	public LocalDate getDt_acesso() {
+	public java.util.Date getDt_acesso() {
 		return dt_acesso;
 	}
+
+
+	/**
+	 * @param dt_acesso the dt_acesso to set
+	 * 
+	 */
+	public void setDt_acesso() throws ParseException {
+		Calendar dataAtual = Calendar.getInstance();
+		dt_acesso =  dataAtual.getTime();
+	}
+	
 	
 	
 
