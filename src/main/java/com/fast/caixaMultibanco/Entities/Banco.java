@@ -1,6 +1,8 @@
 package com.fast.caixaMultibanco.Entities;
 
-import java.util.Date;
+
+
+import java.sql.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -100,6 +102,8 @@ public class Banco {
 	public Date getInicio_da_operacao() {
 		return inicio_da_operacao;
 	}
+	
+	
 	
 	
 	

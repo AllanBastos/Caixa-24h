@@ -1,3 +1,6 @@
+
+/*
+
 package com.fast.caixaMultibanco.config;
 
 import java.sql.Date;
@@ -42,3 +45,5 @@ public class TestConfig implements CommandLineRunner {
 	
 
 }
+
+*/

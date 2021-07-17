@@ -1,6 +1,7 @@
 package com.fast.caixaMultibanco.Entities;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -140,6 +141,29 @@ public class Cliente {
 	public LocalDate getDt_acesso() {
 		return dt_acesso;
 	}
+
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(login);
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof Cliente))
+			return false;
+		Cliente other = (Cliente) obj;
+		return Objects.equals(acesso, other.acesso) && codigo_banco == other.codigo_banco
+				&& Objects.equals(conta, other.conta) && Objects.equals(dt_acesso, other.dt_acesso)
+				&& Objects.equals(login, other.login) && Objects.equals(nome_banco, other.nome_banco)
+				&& Objects.equals(nome_cliente, other.nome_cliente) && Objects.equals(saldo, other.saldo)
+				&& Objects.equals(senha, other.senha) && Objects.equals(telefone_cliente, other.telefone_cliente);
+	}
+	
+	
 	
 	
 
