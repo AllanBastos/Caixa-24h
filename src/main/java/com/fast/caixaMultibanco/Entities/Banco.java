@@ -23,7 +23,6 @@ public class Banco {
 	private String compe;
 	private String acesso_principal;
 	private String nome_extenso;
-	private Date inicio_da_operacao;
 	
 	
 
@@ -37,7 +36,7 @@ public class Banco {
 
 
 	public Banco(int iSPB, String nome_reduzido, Integer codigo, String compe, String acesso_principal,
-			String nome_extenso, Date inicio_da_operacao) {
+			String nome_extenso) {
 		super();
 		ISPB = iSPB;
 		this.nome_reduzido = nome_reduzido;
@@ -45,7 +44,6 @@ public class Banco {
 		this.compe = compe;
 		this.acesso_principal = acesso_principal;
 		this.nome_extenso = nome_extenso;
-		this.inicio_da_operacao = inicio_da_operacao;
 	}
 
 
@@ -98,11 +96,6 @@ public class Banco {
 		return codigo;
 	}
 
-
-	public Date getInicio_da_operacao() {
-		return inicio_da_operacao;
-	}
-	
 	
 	
 	

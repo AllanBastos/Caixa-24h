@@ -1,38 +1,26 @@
 package com.fast.caixaMultibanco.Entities;
 
-<<<<<<< HEAD
-
 import java.text.ParseException;
 import java.util.Calendar;
-import java.util.Date;
-=======
-import java.security.MessageDigest;
-import java.time.LocalDate;
-<<<<<<< HEAD
 import java.util.Objects;
-=======
->>>>>>> 23b38522d16e3b510b2d874f42ed20ee8f77d03f
->>>>>>> 6321adb2668f9a2bbcb038bfa972901a3f961a73
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+import tools.Criptografia;
+
 /**
  * Classe Cliente, entidade que representa o cliente de um banco
  * 
  * @author allan
- * @version 0.0.4
+ * @version 0.0.5
  */
 
 @Entity
 public class Cliente {
 	// Atributos
 
-<<<<<<< HEAD
-	
-=======
->>>>>>> 23b38522d16e3b510b2d874f42ed20ee8f77d03f
 	@Id
 	@Column(nullable = false)
 	private String login; // Obrigatório.
@@ -52,16 +40,9 @@ public class Cliente {
 	private Double saldo; // [Obrigatório] valor decimal com o saldo da conta do cliente;
 	@Column()
 	private String acesso; // código temporário para operações (alfanumérico de 64 caracteres).
-<<<<<<< HEAD
-	private Date dt_acesso; // data e hora da geração do acesso.
-	
-	
-	
-=======
 	@Column()
-	private LocalDate dt_acesso; // data e hora da geração do acesso.
+	private Long dt_acesso; // data e hora da geração do acesso.
 
->>>>>>> 23b38522d16e3b510b2d874f42ed20ee8f77d03f
 	/**
 	 * 
 	 */
@@ -137,7 +118,9 @@ public class Cliente {
 	 * @throws Exception
 	 */
 	public void setSenha(String senha) throws Exception {
-		this.senha = gerarHashMD5(senha);
+		this.senha = Criptografia.gerarHashMD5(senha);
+
+//		this.senha = Criptografia:gerarHashMD5(senha);
 	}
 
 	/**
@@ -203,20 +186,27 @@ public class Cliente {
 		return acesso;
 	}
 
-	/**
-	 * @return the date and time of the access generation
-	 */
-	public java.util.Date getDt_acesso() {
+	public Long getDt_acesso() {
 		return dt_acesso;
 	}
 
-<<<<<<< HEAD
+	/**
+	 * @param dt_acesso the dt_acesso to set
+	 * 
+	 */
+	public void setDt_acesso() throws ParseException {
+		Calendar dataAtual = Calendar.getInstance();
+		dt_acesso = dataAtual.getTimeInMillis();
+	}
+
+	/**
+	 * @return the date and time of the access generation
+	 */
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(login);
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -231,37 +221,5 @@ public class Cliente {
 				&& Objects.equals(nome_cliente, other.nome_cliente) && Objects.equals(saldo, other.saldo)
 				&& Objects.equals(senha, other.senha) && Objects.equals(telefone_cliente, other.telefone_cliente);
 	}
-	
-=======
-<<<<<<< HEAD
-
-	/**
-	 * @param dt_acesso the dt_acesso to set
-	 * 
-	 */
-	public void setDt_acesso() throws ParseException {
-		Calendar dataAtual = Calendar.getInstance();
-		dt_acesso =  dataAtual.getTime();
-	}
->>>>>>> 6321adb2668f9a2bbcb038bfa972901a3f961a73
-	
-	
-	
-=======
-	/**
-	 * Author: Maurilio
-	 * Criptografar senha com MD5
-	 *
-	 */
-	private String gerarHashMD5(String senha) throws Exception {
-		MessageDigest algorithm = MessageDigest.getInstance("MD5");
-		byte hash[] = algorithm.digest(senha.getBytes("UTF-8"));
-		StringBuilder texto = new StringBuilder();
-		for (byte b : hash) {
-			texto.append(String.format("%02X", 0xFF & b));
-		}
-		return texto.toString();
-	}
->>>>>>> 23b38522d16e3b510b2d874f42ed20ee8f77d03f
 
 }
