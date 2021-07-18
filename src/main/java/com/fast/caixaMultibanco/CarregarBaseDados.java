@@ -50,19 +50,6 @@ public class CarregarBaseDados {
 				System.out.println(e.getMessage());
 			}
 			
-//			Banco banco1 = new Banco(00000000, "BCO DO BRASIL S.A.", 001, "Sim", "RSFN", "Banco do Brasil S.A.");
-//			Banco banco2 = new Banco(00360305, "CAIXA ECONOMICA FEDERAL", 104, "Sim", "RSFN",
-//					"CAIXA ECONOMICA FEDERAL");
-//			Banco banco3 = new Banco(60701190, "ITAÚ UNIBANCO S.A.", 341, "Sim", "RSFN", "ITAÚ UNIBANCO S.A.");
-//			Banco banco4 = new Banco(60746948, "BCO BRADESCO S.A.", 237, "Sim", "RSFN", "Banco Bradesco S.A.");
-//			Banco banco5 = new Banco(90400888, "BCO SANTANDER (BRASIL) S.A.", 033, "Sim", "RSFN",
-//					"RSFN, BANCO SANTANDER (BRASIL) S.A.");
-//			log.info("Carregando " + banco.save(banco1));
-//			log.info("Carregando " + banco.save(banco2));
-//			log.info("Carregando " + banco.save(banco3));
-//			log.info("Carregando " + banco.save(banco4));
-//			log.info("Carregando " + banco.save(banco5));
-
 			/*
 			 * Inserindo Clientes
 			 */
