@@ -15,8 +15,7 @@ public class CaixaMultibancoApplication {
 	public static void main(String[] args) {
 		
 		SpringApplication.run(CaixaMultibancoApplication.class, args);
-		System.out.println("Hello Word");
-		System.out.println("Meu nome é AllanN");
+		System.out.println("Aplicação iniciada com sucesso!");
 	}
 
 }

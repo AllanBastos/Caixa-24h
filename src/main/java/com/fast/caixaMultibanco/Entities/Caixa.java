@@ -37,16 +37,23 @@ public class Caixa {
 	
 	private int qtd_cedulas_50;
 	
+	/*
+	 * Construtores
+	 */
+	public Caixa() {
+		setQtd_cedulas_2(MAX_CEDULAS);
+		setQtd_cedulas_5(MAX_CEDULAS);
+		setQtd_cedulas_10(MAX_CEDULAS);
+		setQtd_cedulas_50(MAX_CEDULAS);
+	}
 
-	// Construtor
 	public Caixa(int qtd_cedulas_2, int qtd_cedulas_5, int qtd_cedulas_10, int qtd_cedulas_50) {
 		setQtd_cedulas_2(qtd_cedulas_2);
 		setQtd_cedulas_5(qtd_cedulas_5);
 		setQtd_cedulas_10(qtd_cedulas_10);
 		setQtd_cedulas_50(qtd_cedulas_50);
-		
+
 	}
-	
 	
 	/**
 	 * @return the qtd_cedulas_2
