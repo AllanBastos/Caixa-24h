@@ -23,20 +23,21 @@ public class Banco {
 	private String compe;
 	private String acesso_principal;
 	private String nome_extenso;
+	private Date date;
 	
 	
 
 	/**
+	 * @param date 
 	 * 
 	 */
-	public Banco() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
 
-
+    public Banco() {
+    	
+    }
+	
 	public Banco(int iSPB, String nome_reduzido, Integer codigo, String compe, String acesso_principal,
-			String nome_extenso) {
+			String nome_extenso, Date date) {
 		super();
 		ISPB = iSPB;
 		this.nome_reduzido = nome_reduzido;
@@ -44,6 +45,7 @@ public class Banco {
 		this.compe = compe;
 		this.acesso_principal = acesso_principal;
 		this.nome_extenso = nome_extenso;
+		this.date = date;
 	}
 
 
@@ -94,6 +96,22 @@ public class Banco {
 
 	public Integer getCodigo() {
 		return codigo;
+	}
+
+
+	/**
+	 * @return the date
+	 */
+	public Date getDate() {
+		return date;
+	}
+
+
+	/**
+	 * @param date the date to set
+	 */
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	
