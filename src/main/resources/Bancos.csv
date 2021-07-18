@@ -1,12 +1,11 @@
-﻿00000000,BCO DO BRASIL S.A.                                          ,001,Sim,RSFN,Banco do Brasil S.A.                                                            ,22/04/2002
-00000208,BRB - BCO DE BRASILIA S.A.                                  ,070,Sim,RSFN,BRB - BANCO DE BRASILIA S.A.                                                    ,22/04/2002
-00360305,CAIXA ECONOMICA FEDERAL                                     ,104,Sim,RSFN,CAIXA ECONOMICA FEDERAL                                                         ,22/04/2002
-04902979,BCO DA AMAZONIA S.A.                                        ,003,Sim,RSFN,BANCO DA AMAZONIA S.A.                                                          ,22/04/2002
-10573521,MERCADO PAGO                                                ,323,Não,RSFN,MERCADOPAGO.COM REPRESENTACOES LTDA.                                            ,24/06/2019
-13009717,BCO DO EST. DE SE S.A.                                      ,047,Sim,RSFN,Banco do Estado de Sergipe S.A.                                                 ,22/04/2002
-18236120,NU PAGAMENTOS S.A.                                          ,260,Não,RSFN,Nu Pagamentos S.A.                                                              ,10/10/2017
-22896431,PICPAY                                                      ,380,Não,RSFN,PICPAY SERVICOS S.A.                                                            ,15/10/2020
-33657248,BNDES                                                       ,007,Não,RSFN,BANCO NACIONAL DE DESENVOLVIMENTO ECONOMICO E SOCIAL                            ,30/06/2014
-60701190,ITAÚ UNIBANCO S.A.                                          ,341,Sim,RSFN,ITAÚ UNIBANCO S.A.                                                              ,22/04/2002
-60746948,BCO BRADESCO S.A.                                           ,237,Sim,RSFN,Banco Bradesco S.A.                                                             ,22/04/2002
-
+﻿,00000000,BCO DO BRASIL S.A.                                          ,001,Sim,RSFN,Banco do Brasil S.A.                                                            ,22/04/2002
+,00000208,BRB - BCO DE BRASILIA S.A.                                  ,070,Sim,RSFN,BRB - BANCO DE BRASILIA S.A.                                                    ,22/04/2002
+,00360305,CAIXA ECONOMICA FEDERAL                                     ,104,Sim,RSFN,CAIXA ECONOMICA FEDERAL                                                         ,22/04/2002
+,04902979,BCO DA AMAZONIA S.A.                                        ,003,Sim,RSFN,BANCO DA AMAZONIA S.A.                                                          ,22/04/2002
+,10573521,MERCADO PAGO                                                ,323,Não,RSFN,MERCADOPAGO.COM REPRESENTACOES LTDA.                                            ,24/06/2019
+,13009717,BCO DO EST. DE SE S.A.                                      ,047,Sim,RSFN,Banco do Estado de Sergipe S.A.                                                 ,22/04/2002
+,18236120,NU PAGAMENTOS S.A.                                          ,260,Não,RSFN,Nu Pagamentos S.A.                                                              ,10/10/2017
+,22896431,PICPAY                                                      ,380,Não,RSFN,PICPAY SERVICOS S.A.                                                            ,15/10/2020
+,33657248,BNDES                                                       ,007,Não,RSFN,BANCO NACIONAL DE DESENVOLVIMENTO ECONOMICO E SOCIAL                            ,30/06/2014
+,60701190,ITAÚ UNIBANCO S.A.                                          ,341,Sim,RSFN,ITAÚ UNIBANCO S.A.                                                              ,22/04/2002
+,60746948,BCO BRADESCO S.A.                                           ,237,Sim,RSFN,Banco Bradesco S.A.                                                             ,22/04/2002

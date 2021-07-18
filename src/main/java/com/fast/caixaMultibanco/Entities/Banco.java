@@ -2,8 +2,6 @@ package com.fast.caixaMultibanco.Entities;
 
 
 
-import java.sql.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
