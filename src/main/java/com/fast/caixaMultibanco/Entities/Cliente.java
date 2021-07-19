@@ -7,6 +7,7 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 import tools.Criptografar;
 
@@ -38,9 +39,11 @@ public class Cliente {
 	private String conta; // [Obrigatório]
 	@Column(nullable = false)
 	private Double saldo; // [Obrigatório] valor decimal com o saldo da conta do cliente;
-	@Column()
-	private String acesso; // código temporário para operações (alfanumérico de 64 caracteres).
-	@Column()
+	
+	
+	@OneToOne
+	private Acesso acesso; // código temporário para operações (alfanumérico de 64 caracteres).
+	
 	private Long dt_acesso; // data e hora da geração do acesso.
 	private Long dt_logout;
 
@@ -183,7 +186,7 @@ public class Cliente {
 	/**
 	 * @return the acesso: temporary code for operations
 	 */
-	public String getAcesso() {
+	public Acesso getAcesso() {
 		return acesso;
 	}
 
@@ -213,7 +216,7 @@ public class Cliente {
 	/**
 	 * @param acesso the acesso to set
 	 */
-	public void setAcesso(String acesso) {
+	public void setAcesso(Acesso acesso) {
 		this.acesso = acesso;
 	}
 

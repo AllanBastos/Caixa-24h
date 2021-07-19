@@ -1,19 +1,29 @@
 package com.fast.caixaMultibanco.Entities;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import java.util.Objects;
 
-import tools.Criptografar;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Acesso {
 
 	@Id	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	@OneToOne
+	@JoinColumn(name = "cliente_id")
+	@OneToMany(mappedBy = "cliente" )
+	private Cliente cliente;
+	
 	private String token;
-	private String login;
-	private String senha;
 	private Integer caixa;
-	private String conta;
 	private Long tempoInicial;
 	private Long tempoFinal;
 
@@ -23,49 +33,42 @@ public class Acesso {
 	public Acesso() {
 		super();
 	}
-
-//	/**
-//	 * @return the id
-//	 */
-//	public Long getId() {
-//		return id;
-//	}
-//
-//	/**
-//	 * @param id the id to set
-//	 */
-//	public void setId(Long id) {
-//		this.id = id;
-//	}
+	
+	
 
 	/**
-	 * @return the login
+	 * @param cliente
+	 * @param token
+	 * @param caixa
+	 * @param tempoInicial
+	 * @param tempoFinal
 	 */
-	public String getLogin() {
-		return login;
+	public Acesso(Cliente cliente, String token, Integer caixa, Long tempoInicial, Long tempoFinal) {
+		super();
+		this.cliente = cliente;
+		this.token = token;
+		this.caixa = caixa;
+		this.tempoInicial = tempoInicial;
+		this.tempoFinal = tempoFinal;
+	}
+
+
+
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
 	}
 
 	/**
-	 * @param login the login to set
+	 * @param id the id to set
 	 */
-	public void setLogin(String login) {
-		this.login = login;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	/**
-	 * @return the senha
-	 */
-	public String getSenha() {
-		return senha;
-	}
 
-	/**
-	 * @param senha the senha to set
-	 * @throws Exception
-	 */
-	public void setSenha(String senha) throws Exception {
-		this.senha = Criptografar.gerarHashMD5(senha);
-	}
 
 	/**
 	 * @return the token
@@ -95,19 +98,6 @@ public class Acesso {
 		this.caixa = caixa;
 	}
 
-	/**
-	 * @return the conta
-	 */
-	public String getConta() {
-		return conta;
-	}
-
-	/**
-	 * @param conta the conta to set
-	 */
-	public void setConta(String conta) {
-		this.conta = conta;
-	}
 
 	/**
 	 * @return the fimTempo
@@ -138,6 +128,43 @@ public class Acesso {
 	 */
 	public void setTempoFinal() {
 		this.tempoFinal = getTempoInicial() + 4000;
+	}
+
+	/**
+	 * @return the cliente
+	 */
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	/**
+	 * @param cliente the cliente to set
+	 */
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(caixa, cliente, id, tempoFinal, tempoInicial, token);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof Acesso))
+			return false;
+		Acesso other = (Acesso) obj;
+		return Objects.equals(caixa, other.caixa) && Objects.equals(cliente, other.cliente)
+				&& Objects.equals(id, other.id) && Objects.equals(tempoFinal, other.tempoFinal)
+				&& Objects.equals(tempoInicial, other.tempoInicial) && Objects.equals(token, other.token);
+	}
+
+	@Override
+	public String toString() {
+		return "Acesso [id=" + id + ", cliente=" + cliente + ", token=" + token + ", caixa=" + caixa + ", tempoInicial="
+				+ tempoInicial + ", tempoFinal=" + tempoFinal + "]";
 	}
 
 	

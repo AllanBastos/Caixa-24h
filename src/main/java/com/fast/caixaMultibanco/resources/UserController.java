@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fast.caixaMultibanco.Entities.Acesso;
+import com.fast.caixaMultibanco.Entities.AuxAcesso;
+import com.fast.caixaMultibanco.Entities.AuxLogin;
 import com.fast.caixaMultibanco.Entities.Caixa;
 import com.fast.caixaMultibanco.Entities.Cliente;
 import com.fast.caixaMultibanco.exception.EntitiesException;
@@ -31,13 +33,13 @@ public class UserController {
 	private final ClienteRepository clienteRepositorio;
 	private final CaixaRepository caixaRepositorio;
 	private final AcessoRepository acessoRepositorio;
-	private Acesso acesso;
+
 
 	/**
 	 * 
 	 * @author Maurilio
 	 * @author allan
-	 * @version 0.0.3
+	 * @version 0.0.4
 	 */	
 	public UserController(ClienteRepository clienteRepositorio, CaixaRepository caixaRepositorio, AcessoRepository acessoRepositorio) {
 		this.clienteRepositorio = clienteRepositorio;
@@ -47,24 +49,28 @@ public class UserController {
 	
 	@PostMapping("/loginBanco")
 	@ResponseBody
-	String loginBanco(@RequestBody Acesso novoAcesso) throws Exception {
-		Cliente cliente = this.one(novoAcesso.getLogin());
-		//Caixa caixa = this.buscarCaixa(novoAcesso.getCaixa());
-		if(cliente.getSenha().equals(novoAcesso.getSenha())) {
-			if(cliente.getConta().equals(novoAcesso.getConta())) {
-				acesso = novoAcesso;
-				acesso.setTempoInicial(Calendar.getInstance().getTimeInMillis());
-				acesso.setTempoFinal();
-				System.out.println(acesso.getTempoInicial());
-				System.out.println(acesso.getTempoFinal());
-				acesso.setToken(Criptografar.gerartoken(acesso.getLogin()));
+	AuxAcesso loginBanco(@RequestBody AuxLogin login) throws Exception {
+		
+		System.out.println(login);
+		
+		Acesso novoAcesso = new Acesso(null, null, null, null, null);
+		Cliente cliente = this.one(login.getLogin());
+
+		if(cliente.getSenha().equals( Criptografar.gerarHashMD5(login.getSenha()))) {
+			if(cliente.getConta().equals(login.getConta())) {
+				novoAcesso.setCaixa(login.getCaixa());
+				novoAcesso.setCliente(cliente);
+				novoAcesso.setTempoInicial(Calendar.getInstance().getTimeInMillis());
+				novoAcesso.setTempoFinal();
+				novoAcesso.setToken(Criptografar.gerartoken(novoAcesso.getCliente().getLogin()));
 				System.out.println("ACESSO PERMITIDO");
-				System.out.println(acesso.getToken());
-				cliente.setAcesso(acesso.getToken());
-				acessoRepositorio.save(acesso);
+				cliente.setAcesso(novoAcesso);
+				acessoRepositorio.save(novoAcesso);
 				clienteRepositorio.save(cliente);
-				
-				return String.format("{\n    \"acesso\": \"%s\" \n}" , cliente.getAcesso()).indent(5);
+				AuxAcesso auxAcesso = new AuxAcesso();
+				auxAcesso.setAcesso(novoAcesso.getToken());
+				System.out.println(auxAcesso);
+				return auxAcesso;
 			}
 		}
 		return null;
