@@ -72,7 +72,7 @@ public class Acesso {
 	 * @return the token
 	 */
 	public String getToken() {
-		return token;
+		return  token;
 	}
 
 	/**

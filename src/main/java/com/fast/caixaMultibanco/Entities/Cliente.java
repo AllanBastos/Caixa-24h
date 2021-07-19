@@ -208,6 +208,14 @@ public class Cliente {
 	public void setDt_logout() {
 		this.dt_logout = this.dt_acesso + 4000;
 	}
+	
+	
+	/**
+	 * @param acesso the acesso to set
+	 */
+	public void setAcesso(String acesso) {
+		this.acesso = acesso;
+	}
 
 	/**
 	 * @return the date and time of the access generation

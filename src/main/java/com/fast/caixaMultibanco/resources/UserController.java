@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fast.caixaMultibanco.Entities.Acesso;
@@ -33,7 +34,8 @@ public class UserController {
 	/**
 	 * 
 	 * @author Maurilio
-	 * @version 0.0.1
+	 * @author allan
+	 * @version 0.0.3
 	 */	
 	public UserController(ClienteRepository clienteRepositorio, CaixaRepository caixaRepositorio) {
 		this.clienteRepositorio = clienteRepositorio;
@@ -41,9 +43,10 @@ public class UserController {
 	}
 	
 	@PostMapping("/loginBanco")
+	@ResponseBody
 	String loginBanco(@RequestBody Acesso novoAcesso) throws Exception {
 		Cliente cliente = this.one(novoAcesso.getLogin());
-		Caixa caixa = this.buscarCaixa(novoAcesso.getCaixa());
+		//Caixa caixa = this.buscarCaixa(novoAcesso.getCaixa());
 		if(cliente.getSenha().equals(novoAcesso.getSenha())) {
 			if(cliente.getConta().equals(novoAcesso.getConta())) {
 				acesso = novoAcesso;
@@ -54,7 +57,10 @@ public class UserController {
 				acesso.setToken(Criptografar.gerartoken(acesso.getLogin()));
 				System.out.println("ACESSO PERMITIDO");
 				System.out.println(acesso.getToken());
-				return acesso.getToken();
+				cliente.setAcesso(acesso.getToken());
+				clienteRepositorio.save(cliente);
+				
+				return String.format("{\n    \"acesso\": \"%s\" \n}" , cliente.getAcesso()).indent(5);
 			}
 		}
 		return null;
