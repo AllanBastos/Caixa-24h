@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import tools.Criptografar;
 
 /**
@@ -42,6 +44,7 @@ public class Cliente {
 	
 	
 	@OneToOne
+	@JsonIgnore
 	private Acesso acesso; // código temporário para operações (alfanumérico de 64 caracteres).
 	
 	private Long dt_acesso; // data e hora da geração do acesso.
