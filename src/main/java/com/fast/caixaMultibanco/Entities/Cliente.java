@@ -8,7 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-import tools.Criptografia;
+import tools.Criptografar;
 
 /**
  * Classe Cliente, entidade que representa o cliente de um banco
@@ -42,6 +42,7 @@ public class Cliente {
 	private String acesso; // código temporário para operações (alfanumérico de 64 caracteres).
 	@Column()
 	private Long dt_acesso; // data e hora da geração do acesso.
+	private Long dt_logout;
 
 	/**
 	 * 
@@ -118,7 +119,7 @@ public class Cliente {
 	 * @throws Exception
 	 */
 	public void setSenha(String senha) throws Exception {
-		this.senha = Criptografia.gerarHashMD5(senha);
+		this.senha = Criptografar.gerarHashMD5(senha);
 
 //		this.senha = Criptografia:gerarHashMD5(senha);
 	}
@@ -197,6 +198,15 @@ public class Cliente {
 	public void setDt_acesso() throws ParseException {
 		Calendar dataAtual = Calendar.getInstance();
 		dt_acesso = dataAtual.getTimeInMillis();
+	}
+	
+
+	public Long getDt_logout() {
+		return dt_logout;
+	}
+
+	public void setDt_logout() {
+		this.dt_logout = this.dt_acesso + 4000;
 	}
 
 	/**
