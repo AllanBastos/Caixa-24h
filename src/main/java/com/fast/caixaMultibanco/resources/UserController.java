@@ -3,7 +3,7 @@
  */
 package com.fast.caixaMultibanco.resources;
 
-import java.util.Calendar;
+import java.time.Instant;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,16 +60,16 @@ public class UserController {
 			if(cliente.getConta().equals(login.getConta())) {
 				novoAcesso.setCaixa(login.getCaixa());
 				novoAcesso.setCliente(cliente);
-				novoAcesso.setTempoInicial(Calendar.getInstance().getTimeInMillis());
+				Instant now = Instant.now();
+				novoAcesso.setTempoInicial(now.toEpochMilli());
 				novoAcesso.setTempoFinal();
 				novoAcesso.setToken(Criptografar.gerartoken(novoAcesso.getCliente().getLogin()));
-				System.out.println("ACESSO PERMITIDO");
 				cliente.setAcesso(novoAcesso);
+				cliente.setDt_acesso(now);
 				acessoRepositorio.save(novoAcesso);
 				clienteRepositorio.save(cliente);
 				AuxAcesso auxAcesso = new AuxAcesso();
 				auxAcesso.setAcesso(novoAcesso.getToken());
-				System.out.println(auxAcesso);
 				return auxAcesso;
 			}
 		}

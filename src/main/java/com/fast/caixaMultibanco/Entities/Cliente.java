@@ -1,13 +1,16 @@
 package com.fast.caixaMultibanco.Entities;
 
 import java.text.ParseException;
-import java.util.Calendar;
+import java.time.Instant;
 import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 import tools.Criptografar;
 
@@ -44,8 +47,10 @@ public class Cliente {
 	@OneToOne
 	private Acesso acesso; // código temporário para operações (alfanumérico de 64 caracteres).
 	
-	private Long dt_acesso; // data e hora da geração do acesso.
-	private Long dt_logout;
+	@Column(nullable = true)
+	@JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd'T'HH:ss'Z'", timezone = "GMT")
+	private Instant dt_acesso; // data e hora da geração do acesso.
+	private Instant dt_logout;
 
 	/**
 	 * 
@@ -189,7 +194,10 @@ public class Cliente {
 		return acesso;
 	}
 
-	public Long getDt_acesso() {
+	public Instant getDt_acesso() {
+		if (dt_acesso == null) {
+			return null;
+		}
 		return dt_acesso;
 	}
 
@@ -197,18 +205,17 @@ public class Cliente {
 	 * @param dt_acesso the dt_acesso to set
 	 * 
 	 */
-	public void setDt_acesso() throws ParseException {
-		Calendar dataAtual = Calendar.getInstance();
-		dt_acesso = dataAtual.getTimeInMillis();
+	public void setDt_acesso(Instant data) throws ParseException {
+		dt_acesso = data;
 	}
 	
 
-	public Long getDt_logout() {
+	public Instant getDt_logout() {
 		return dt_logout;
 	}
 
 	public void setDt_logout() {
-		this.dt_logout = this.dt_acesso + 4000;
+		this.dt_logout = Instant.ofEpochMilli(getDt_acesso().toEpochMilli() + 4000);
 	}
 	
 	
