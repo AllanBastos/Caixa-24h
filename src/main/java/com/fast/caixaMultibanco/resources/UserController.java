@@ -18,6 +18,7 @@ import com.fast.caixaMultibanco.Entities.Acesso;
 import com.fast.caixaMultibanco.Entities.Caixa;
 import com.fast.caixaMultibanco.Entities.Cliente;
 import com.fast.caixaMultibanco.exception.EntitiesException;
+import com.fast.caixaMultibanco.repositories.AcessoRepository;
 import com.fast.caixaMultibanco.repositories.CaixaRepository;
 import com.fast.caixaMultibanco.repositories.ClienteRepository;
 
@@ -29,6 +30,7 @@ public class UserController {
 
 	private final ClienteRepository clienteRepositorio;
 	private final CaixaRepository caixaRepositorio;
+	private final AcessoRepository acessoRepositorio;
 	private Acesso acesso;
 
 	/**
@@ -37,9 +39,10 @@ public class UserController {
 	 * @author allan
 	 * @version 0.0.3
 	 */	
-	public UserController(ClienteRepository clienteRepositorio, CaixaRepository caixaRepositorio) {
+	public UserController(ClienteRepository clienteRepositorio, CaixaRepository caixaRepositorio, AcessoRepository acessoRepositorio) {
 		this.clienteRepositorio = clienteRepositorio;
 		this.caixaRepositorio = caixaRepositorio;
+		this.acessoRepositorio = acessoRepositorio;
 	}
 	
 	@PostMapping("/loginBanco")
@@ -58,6 +61,7 @@ public class UserController {
 				System.out.println("ACESSO PERMITIDO");
 				System.out.println(acesso.getToken());
 				cliente.setAcesso(acesso.getToken());
+				acessoRepositorio.save(acesso);
 				clienteRepositorio.save(cliente);
 				
 				return String.format("{\n    \"acesso\": \"%s\" \n}" , cliente.getAcesso()).indent(5);

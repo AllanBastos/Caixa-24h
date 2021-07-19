@@ -8,11 +8,10 @@ import tools.Criptografar;
 @Entity
 public class Acesso {
 
-	@Id
-	private Long id;
+	@Id	
+	private String token;
 	private String login;
 	private String senha;
-	private String token;
 	private Integer caixa;
 	private String conta;
 	private Long tempoInicial;
@@ -25,19 +24,19 @@ public class Acesso {
 		super();
 	}
 
-	/**
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
-	}
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
+//	/**
+//	 * @return the id
+//	 */
+//	public Long getId() {
+//		return id;
+//	}
+//
+//	/**
+//	 * @param id the id to set
+//	 */
+//	public void setId(Long id) {
+//		this.id = id;
+//	}
 
 	/**
 	 * @return the login
@@ -140,5 +139,9 @@ public class Acesso {
 	public void setTempoFinal() {
 		this.tempoFinal = getTempoInicial() + 4000;
 	}
+
+	
+	
+	
 
 }
