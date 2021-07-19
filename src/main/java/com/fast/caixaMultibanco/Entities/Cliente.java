@@ -45,7 +45,7 @@ public class Cliente {
 	
 	
 	@OneToOne
-	private Acesso acesso; // código temporário para operações (alfanumérico de 64 caracteres).
+	private Acesso acesso; // Acesso com código temporário para operações (alfanumérico de 64 caracteres).
 	
 	@Column(nullable = true)
 	@JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd'T'HH:ss'Z'", timezone = "GMT")
@@ -248,5 +248,14 @@ public class Cliente {
 				&& Objects.equals(nome_cliente, other.nome_cliente) && Objects.equals(saldo, other.saldo)
 				&& Objects.equals(senha, other.senha) && Objects.equals(telefone_cliente, other.telefone_cliente);
 	}
+
+	@Override
+	public String toString() {
+		return "Cliente [login=" + login + ", nome_cliente=" + nome_cliente + ", telefone_cliente=" + telefone_cliente
+				+ ", senha=" + senha + ", codigo_banco=" + codigo_banco + ", nome_banco=" + nome_banco + ", conta="
+				+ conta + ", saldo=" + saldo + ", acesso=" + acesso + ", dt_acesso=" + dt_acesso + ", dt_logout="
+				+ dt_logout + "]";
+	}
+	
 
 }

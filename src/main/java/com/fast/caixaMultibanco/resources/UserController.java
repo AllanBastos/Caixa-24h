@@ -4,7 +4,11 @@
 package com.fast.caixaMultibanco.resources;
 
 import java.time.Instant;
+import java.util.List;
+import java.util.Locale;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,8 +55,6 @@ public class UserController {
 	@ResponseBody
 	AuxAcesso loginBanco(@RequestBody AuxLogin login) throws Exception {
 		
-		System.out.println(login);
-		
 		Acesso novoAcesso = new Acesso(null, null, null, null, null);
 		Cliente cliente = this.one(login.getLogin());
 
@@ -75,6 +77,61 @@ public class UserController {
 		}
 		return null;
 	}
+	
+	@GetMapping("/consultarSaldo")
+	ResponseEntity<Object> consultarSaldo(@RequestBody AuxAcesso acesso) {
+		List<Acesso> lista = acessoRepositorio.findAll();
+		String acc = acesso.getAcesso();
+		Acesso achouAcesso = null;
+		for (Acesso obj : lista) {
+			String token = obj.getToken();		
+			if (acc.equals(token)){
+				achouAcesso = obj;
+			}
+		}
+		List<Cliente> clientes = findAllClientes();
+		Cliente achouCliente = null;
+		
+		for (Cliente cliente : clientes) {
+			if(cliente.getAcesso() != null) {
+				String tokenCliente = cliente.getAcesso().getToken();
+				if(acc.equals(tokenCliente)) {
+					achouCliente = cliente;
+				}
+			}
+		}
+		
+		if(achouCliente != null) {
+			Instant now = Instant.now();
+			if(now.toEpochMilli() > achouAcesso.getTempoFinal()){
+				System.out.println("tempo agora " +now.toEpochMilli() + "tempo que achei " + achouAcesso.getTempoFinal() + " Acabou o tempo");
+				return null;
+			}else {
+				Locale.setDefault( Locale.US);
+				return ResponseEntity.ok().body(String.format("{ \"saldo\": \"%.2f\"}", achouCliente.getSaldo()));
+			}
+		}
+		
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+		
+		
+		
+		
+		
+		
+////		Instant now = Instant.now() ;
+//		if ( now.toEpochMilli() < principal.getTempoFinal()  ) {
+//			return ResponseEntity.ok().body(principal.getCliente().getSaldo());
+//		}
+//		
+//		return null;
+	}
+	
+	@GetMapping("/clientes")
+	List<Cliente> findAllClientes(){
+		return clienteRepositorio.findAll();
+	}
+	
 
 	@PostMapping("/cliente")
 	Cliente novoCliente(@RequestBody Cliente novoCliente) {
@@ -91,7 +148,6 @@ public class UserController {
 	void excluirCliente(@PathVariable String id) {
 		clienteRepositorio.deleteById(id);
 	}
-	
 	
 	/*
 	 * CAIXA NÃO PRECISA DE POST, PUT OU DELETE - POR ENQUANTO.

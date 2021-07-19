@@ -130,7 +130,7 @@ public class Acesso {
 	 * @param tempoFinal the tempoFinal to set
 	 */
 	public void setTempoFinal() {
-		this.tempoFinal = getTempoInicial() + 4000;
+		this.tempoFinal = getTempoInicial() + 60000;
 	}
 
 	/**
