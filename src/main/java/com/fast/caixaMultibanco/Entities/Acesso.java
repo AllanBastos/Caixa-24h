@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Acesso {
 
@@ -20,6 +22,7 @@ public class Acesso {
 	@OneToOne
 	@JoinColumn(name = "cliente_id")
 	@OneToMany(mappedBy = "cliente" )
+	@JsonIgnore
 	private Cliente cliente;
 	
 	private String token;
