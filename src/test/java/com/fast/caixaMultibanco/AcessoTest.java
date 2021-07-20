@@ -3,7 +3,6 @@
  */
 package com.fast.caixaMultibanco;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -16,9 +15,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import com.fast.caixaMultibanco.Entities.Acesso;
-import com.fast.caixaMultibanco.Entities.Cliente;
-import com.fast.caixaMultibanco.repositories.AcessoRepository;
+import com.fast.caixaMultibanco.entidades.Acesso;
+import com.fast.caixaMultibanco.entidades.Cliente;
+import com.fast.caixaMultibanco.repositorios.AcessoRepositorio;
 
 
 
@@ -45,12 +44,12 @@ class AcessoTest {
 
 	private void loadAcessos() {
 		/* Carregando objeto Acessos */
-		Acessos.add(new Acesso(cliente, null, null, null, null));
-		Acessos.add(new Acesso(cliente, null, null, null, null));
+		Acessos.add(addAcessoMock(cliente, null, null, null, null));
+		Acessos.add(addAcessoMock(cliente, null, null, null, null));
 	}
 
 	@MockBean
-	private AcessoRepository mockRepositorio;
+	private AcessoRepositorio mockRepositorio;
 
 	@Test
 	public void main() {
@@ -63,7 +62,7 @@ class AcessoTest {
 	public void consultaTodosTest() {
 		loadAcessos();
 		/* Mockado da classe RepositorioAcesso */
-		AcessoRepository mockRepositorio = mock(AcessoRepository.class);
+		AcessoRepositorio mockRepositorio = mock(AcessoRepositorio.class);
 
 		when(mockRepositorio.findAll()).thenReturn(Acessos);
 

@@ -1,4 +1,4 @@
-package com.fast.caixaMultibanco.exception;
+package com.fast.caixaMultibanco.entidades.excecao;
 
 
 /**

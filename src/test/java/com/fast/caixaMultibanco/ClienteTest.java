@@ -13,8 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import com.fast.caixaMultibanco.Entities.Cliente;
-import com.fast.caixaMultibanco.repositories.ClienteRepository;
+import com.fast.caixaMultibanco.entidades.Cliente;
+import com.fast.caixaMultibanco.repositorios.ClienteRepositorio;
 
 /**
  * @author allan
@@ -35,12 +35,12 @@ class ClienteTest {
 	}
 	
 	@MockBean
-	private ClienteRepository mockRepositorio;
+	private ClienteRepositorio mockRepositorio;
 	
 	public void consultaTodosTest() throws Exception {
 		loadClientes();
 		
-		ClienteRepository mockRepositorio = mock(ClienteRepository.class);
+		ClienteRepositorio mockRepositorio = mock(ClienteRepositorio.class);
 		
 		when(mockRepositorio.findAll()).thenReturn(clientes);
 		

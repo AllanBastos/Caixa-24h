@@ -7,8 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import com.fast.caixaMultibanco.Entities.Caixa;
-import com.fast.caixaMultibanco.repositories.CaixaRepository;
+import com.fast.caixaMultibanco.entidades.Caixa;
+import com.fast.caixaMultibanco.repositorios.CaixaRepositorio;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -29,7 +29,7 @@ private List<Caixa> Caixas = new ArrayList<Caixa>();
 	
 	
 	@MockBean
-	private CaixaRepository mockCaixaRepository;
+	private CaixaRepositorio mockCaixaRepository;
 	
 	private static final Logger log = LoggerFactory.getLogger(CaixaTeste.class);
 	@Test
@@ -43,7 +43,7 @@ private List<Caixa> Caixas = new ArrayList<Caixa>();
 		loadCaixas();
 	
 	
-	CaixaRepository mockCaixaRepository = mock(CaixaRepository.class);
+	CaixaRepositorio mockCaixaRepository = mock(CaixaRepositorio.class);
 	
 	/* mockando o retorno do Repositório */
 	when(mockCaixaRepository.findAll())

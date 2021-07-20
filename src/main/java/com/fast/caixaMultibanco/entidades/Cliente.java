@@ -1,4 +1,4 @@
-package com.fast.caixaMultibanco.Entities;
+package com.fast.caixaMultibanco.entidades;
 
 import java.text.ParseException;
 import java.time.Instant;

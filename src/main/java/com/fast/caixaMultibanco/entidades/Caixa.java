@@ -1,4 +1,4 @@
-package com.fast.caixaMultibanco.Entities;
+package com.fast.caixaMultibanco.entidades;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,7 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.fast.caixaMultibanco.exception.EntitiesException;
+import com.fast.caixaMultibanco.entidades.excecao.EntitiesException;
 
 /**
  * Classe Caixa

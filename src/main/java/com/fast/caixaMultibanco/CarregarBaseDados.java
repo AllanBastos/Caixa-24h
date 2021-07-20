@@ -10,12 +10,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.fast.caixaMultibanco.Entities.Banco;
-import com.fast.caixaMultibanco.Entities.Caixa;
-import com.fast.caixaMultibanco.Entities.Cliente;
-import com.fast.caixaMultibanco.repositories.BancoRepository;
-import com.fast.caixaMultibanco.repositories.CaixaRepository;
-import com.fast.caixaMultibanco.repositories.ClienteRepository;
+import com.fast.caixaMultibanco.entidades.Banco;
+import com.fast.caixaMultibanco.entidades.Caixa;
+import com.fast.caixaMultibanco.entidades.Cliente;
+import com.fast.caixaMultibanco.repositorios.BancoRepositorio;
+import com.fast.caixaMultibanco.repositorios.CaixaRepositorio;
+import com.fast.caixaMultibanco.repositorios.ClienteRepositorio;
 
 /**
  * @author Maurilio versão 0.0.2
@@ -26,7 +26,7 @@ public class CarregarBaseDados {
 	private static final Logger log = LoggerFactory.getLogger(CarregarBaseDados.class);
 
 	@Bean
-	CommandLineRunner initDatabase(BancoRepository banco, CaixaRepository caixa, ClienteRepository cliente) {
+	CommandLineRunner initDatabase(BancoRepositorio banco, CaixaRepositorio caixa, ClienteRepositorio cliente) {
 		return args -> {
 			/*
 			 * Inserindo Bancos

@@ -14,8 +14,8 @@ import org.slf4j.Logger;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.junit.Assert;
 
-import com.fast.caixaMultibanco.Entities.Banco;
-import com.fast.caixaMultibanco.repositories.BancoRepository;
+import com.fast.caixaMultibanco.entidades.Banco;
+import com.fast.caixaMultibanco.repositorios.BancoRepositorio;
 
 
 /**
@@ -42,7 +42,7 @@ class BancoTest {
 	}
 
 	@MockBean
-	private BancoRepository mockBancoRepository;
+	private BancoRepositorio mockBancoRepository;
 
 	@Test
 	public void main() {
@@ -58,7 +58,7 @@ class BancoTest {
 		/*
 		 * Mockando da classe Repositório Funcionário
 		 */
-		BancoRepository mockBancoRepository = mock(BancoRepository.class);
+		BancoRepositorio mockBancoRepository = mock(BancoRepositorio.class);
 
 		/*
 		 * Mockando retorno do Repositório
