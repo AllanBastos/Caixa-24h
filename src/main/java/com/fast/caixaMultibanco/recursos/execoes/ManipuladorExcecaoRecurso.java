@@ -26,10 +26,19 @@ public class ManipuladorExcecaoRecurso {
 	
 	
 	@ExceptionHandler(AcessoExcecao.class)
-	public ResponseEntity<ErroPadrao> recursoNaoEncontrado(AcessoExcecao e, HttpServletRequest request ){
+	public ResponseEntity<ErroPadrao> AcessoInvalido(AcessoExcecao e, HttpServletRequest request ){
 		String error = "código de acesso inválido:";
 		HttpStatus status = HttpStatus.BAD_REQUEST;
 		ErroPadrao err = new ErroPadrao(Instant.now(), status.value(), error, e.getMessage(),  request.getRequestURI());	
 		return ResponseEntity.status(status).body(err);
 	}
+	
+	@ExceptionHandler(RuntimeException.class)
+	public ResponseEntity<Object> ErroAplicação(RuntimeException e, HttpServletRequest request ){
+		String error = "Erro na aplicação";
+		HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;	
+		return ResponseEntity.status(status).body(error);
+	}
+	
+	
 }
