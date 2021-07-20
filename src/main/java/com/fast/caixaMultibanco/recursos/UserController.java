@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fast.caixaMultibanco.entidades.Acesso;
 import com.fast.caixaMultibanco.entidades.Cliente;
 import com.fast.caixaMultibanco.entidades.auxiliar.AuxAcesso;
+import com.fast.caixaMultibanco.entidades.auxiliar.AuxCliente;
 import com.fast.caixaMultibanco.entidades.auxiliar.AuxConsultaCliente;
 import com.fast.caixaMultibanco.entidades.auxiliar.AuxLogin;
 import com.fast.caixaMultibanco.services.AcessoServico;
@@ -105,6 +107,42 @@ public class UserController {
 		
 	}
 	
+	@GetMapping("/fazerSaque")
+	ResponseEntity<Object> fazerSaque(){
+		
+		throw new SaqueExcecao("Valor Indisponivel");
+	}
+	
+	@GetMapping("/consultarDadosConta")
+	ResponseEntity<Object> consultarDadosConta(@RequestBody AuxAcesso acesso) {
+		List<Object> achou;
+		
+		 achou = validarAcesso(acesso);
+		 
+		 if (achou.size() > 1) {
+			 Cliente cliente = (Cliente) achou.get(0);
+			 
+			 AuxConsultaCliente retorno = new AuxConsultaCliente(cliente.getCodigo_banco(), cliente.getNome_banco() ,cliente.getConta(), cliente.getTelefone_cliente());
+
+			 return ResponseEntity.ok().body(retorno);
+		 }else {
+			 throw new AcessoExcecao();
+		 }
+	}
+	
+	@PutMapping("/alterarDadosConta")
+	void alterarCliente(@RequestBody AuxCliente dados) {
+		AuxAcesso acesso = new AuxAcesso(dados.getAcesso());
+		List<Object> lista ;
+		lista = validarAcesso(acesso);		
+		Cliente cliente = (Cliente) lista.get(0);
+		cliente.setNome_cliente(dados.getNome_cliente());
+		cliente.setTelefone_cliente(dados.getTelefone_cliente());
+		
+		clienteServico.update(cliente.getLogin(), cliente);
+	}
+	
+	
 	private List<Object> validarAcesso(AuxAcesso acesso) {
 		List<Acesso> lista = acessoServico.findAll();
 		String acc = acesso.getAcesso();
@@ -141,27 +179,6 @@ public class UserController {
 	}
 	
 	
-	@GetMapping("/fazerSaque")
-	ResponseEntity<Object> fazerSaque(){
-		
-		throw new SaqueExcecao("Valor Indisponivel");
-	}
 	
-	@GetMapping("/consultarDadosConta")
-	ResponseEntity<Object> consultarDadosConta(@RequestBody AuxAcesso acesso) {
-		List<Object> achou;
-		
-		 achou = validarAcesso(acesso);
-		 
-		 if (achou.size() > 1) {
-			 Cliente cliente = (Cliente) achou.get(0);
-			 
-			 AuxConsultaCliente retorno = new AuxConsultaCliente(cliente.getCodigo_banco(), cliente.getNome_banco() ,cliente.getConta(), cliente.getTelefone_cliente());
-
-			 return ResponseEntity.ok().body(retorno);
-		 }else {
-			 throw new AcessoExcecao();
-		 }
-	 
-	}
+	
 }
