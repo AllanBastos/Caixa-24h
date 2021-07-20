@@ -24,6 +24,7 @@ import com.fast.caixaMultibanco.entidades.auxiliar.AuxLogin;
 import com.fast.caixaMultibanco.services.AcessoServico;
 import com.fast.caixaMultibanco.services.ClienteServico;
 import com.fast.caixaMultibanco.services.excecoes.AcessoExcecao;
+import com.fast.caixaMultibanco.services.excecoes.SaqueExcecao;
 
 import tools.Criptografar;
 
@@ -137,4 +138,12 @@ public class UserController {
 		return encontrou;
 		
 	}
+	
+	
+	@GetMapping("/fazerSaque")
+	ResponseEntity<Object> fazerSaque(){
+		
+		throw new SaqueExcecao("Valor Indisponivel");
+	}
+
 }

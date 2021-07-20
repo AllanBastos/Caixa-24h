@@ -10,11 +10,12 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.fast.caixaMultibanco.services.excecoes.AcessoExcecao;
+import com.fast.caixaMultibanco.services.excecoes.SaqueExcecao;
 import com.fast.caixaMultibanco.services.excecoes.recursoNaoEncontradoExcecao;
 
 @ControllerAdvice
 public class ManipuladorExcecaoRecurso {
-	
+
 	@ExceptionHandler(recursoNaoEncontradoExcecao.class)
 	public ResponseEntity<ErroPadrao> recursoNaoEncontrado(recursoNaoEncontradoExcecao e, HttpServletRequest request ){
 		String error = "conta, usuário ou senha inválidos(s): ";
@@ -40,5 +41,20 @@ public class ManipuladorExcecaoRecurso {
 		return ResponseEntity.status(status).body(error);
 	}
 	
+	@ExceptionHandler(SaqueExcecao.class)
+	public ResponseEntity<Object> ErroAplicação(SaqueExcecao e, HttpServletRequest request ){
+		HttpStatus status = HttpStatus.MULTIPLE_CHOICES;	
+		class  Erro{
+			@SuppressWarnings("unused")
+			public String mensagem;
+			
+			Erro(String msg){
+				this.mensagem = msg;
+			}
+		}
+		
+		Erro erro = new Erro(e.getMessage());
+		return ResponseEntity.status(status).body(erro);
+	}
 	
 }
