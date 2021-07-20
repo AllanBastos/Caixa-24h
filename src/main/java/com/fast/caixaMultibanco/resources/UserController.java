@@ -113,18 +113,7 @@ public class UserController {
 		}
 		
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-		
-		
-		
-		
-		
-		
-////		Instant now = Instant.now() ;
-//		if ( now.toEpochMilli() < principal.getTempoFinal()  ) {
-//			return ResponseEntity.ok().body(principal.getCliente().getSaldo());
-//		}
-//		
-//		return null;
+
 	}
 	
 	@GetMapping("/clientes")
