@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.fast.caixaMultibanco.entidades.Cliente;
 import com.fast.caixaMultibanco.repositorios.ClienteRepositorio;
+import com.fast.caixaMultibanco.services.excecoes.recursoNaoEncontradoExcecao;
 
 @Service
 public class ClienteServico {
@@ -22,7 +23,7 @@ public class ClienteServico {
 	public Cliente findById(String id) {
 		Optional<Cliente> obj = repository.findById(id);
 		
-		return obj.get();	
+		return obj.orElseThrow(() -> new recursoNaoEncontradoExcecao(id));	
 	}
 	
 	public void delete(String id) {

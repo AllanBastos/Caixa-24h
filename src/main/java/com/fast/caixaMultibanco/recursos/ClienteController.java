@@ -1,4 +1,4 @@
-package com.fast.caixaMultibanco.controladores;
+package com.fast.caixaMultibanco.recursos;
 
 import java.util.List;
 
@@ -12,36 +12,36 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fast.caixaMultibanco.entidades.Caixa;
-import com.fast.caixaMultibanco.services.CaixaServico;
+import com.fast.caixaMultibanco.entidades.Cliente;
+import com.fast.caixaMultibanco.services.ClienteServico;
 
 
 @RestController
-@RequestMapping(value = "/caixa")
-public class CaixaController {
+@RequestMapping(value = "/clientes")
+public class ClienteController {
 
 	@Autowired
-	private CaixaServico service;
+	private ClienteServico service;
 	
 	@GetMapping
-	public ResponseEntity<List<Caixa>> findAll() {
-		List<Caixa> list = service.findAll();
+	public ResponseEntity<List<Cliente>> findAll() {
+		List<Cliente> list = service.findAll();
 		return ResponseEntity.ok().body(list);		
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Caixa> findById(@PathVariable int id){
-		Caixa obj = service.findById(id);
+	public ResponseEntity<Cliente> findById(@PathVariable String id){
+		Cliente obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}	
 	
 	@PostMapping
-	Caixa novoCaixa(@RequestBody Caixa novoCaixa) {
-		return service.insert(novoCaixa);
+	Cliente novoCliente(@RequestBody Cliente novoCliente) {
+		return service.insert(novoCliente);
 	}
 
-	@DeleteMapping("/{id}")
-	void excluirCaixa(@PathVariable int id) {
+	@DeleteMapping("/cliente/{id}")
+	void excluirCliente(@PathVariable String id) {
 		service.delete(id);
 	}
 }
