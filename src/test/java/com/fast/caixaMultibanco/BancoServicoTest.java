@@ -9,11 +9,12 @@ import java.util.Stack;
 
 import org.junit.jupiter.api.Test;
 
-import com.fast.caixaMultibanco.Servicos.BancoServico;
+import com.fast.caixaMultibanco.Servicos.ServicoClienteBanco;
+import com.fast.caixaMultibanco.entidades.Caixa;
 
 class BancoServicoTest {
 
-	BancoServico banco = new BancoServico();
+	ServicoClienteBanco banco = new ServicoClienteBanco();
 
 	@Test
 	void testSaqueCedulasBasico() {
@@ -128,6 +129,15 @@ class BancoServicoTest {
 
 		assertEquals("[2, 2, 2, 2]", Arrays.toString(cedulas));
 
+	}
+	
+	@Test
+	void retirarCedulaCaixa() {
+		Integer[] cedulasSaque = {2,2,2,5,5,5,10,10,10,10,50,50};
+		Caixa caixa = banco.retirarCedulaCaixa(cedulasSaque, new Caixa(200, 200, 200, 200));
+		assertEquals("Caixa [codigo_caixa=null, qtd_cedulas_2=197, qtd_cedulas_5=197, qtd_cedulas_10=196, qtd_cedulas_50=198]", caixa.toString());
+		
+		
 	}
 
 }

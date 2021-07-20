@@ -149,5 +149,11 @@ public class Caixa {
 		}
 		return false;
 	}
+
+	@Override
+	public String toString() {
+		return "Caixa [codigo_caixa=" + codigo_caixa + ", qtd_cedulas_2=" + qtd_cedulas_2 + ", qtd_cedulas_5="
+				+ qtd_cedulas_5 + ", qtd_cedulas_10=" + qtd_cedulas_10 + ", qtd_cedulas_50=" + qtd_cedulas_50 + "]";
+	}
 	
 }
