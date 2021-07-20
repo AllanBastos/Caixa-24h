@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fast.caixaMultibanco.entidades.Acesso;
 import com.fast.caixaMultibanco.entidades.Cliente;
 import com.fast.caixaMultibanco.entidades.auxiliar.AuxAcesso;
+import com.fast.caixaMultibanco.entidades.auxiliar.AuxConsultaCliente;
 import com.fast.caixaMultibanco.entidades.auxiliar.AuxLogin;
 import com.fast.caixaMultibanco.services.AcessoServico;
 import com.fast.caixaMultibanco.services.ClienteServico;
@@ -145,5 +146,22 @@ public class UserController {
 		
 		throw new SaqueExcecao("Valor Indisponivel");
 	}
+	
+	@GetMapping("/consultarDadosConta")
+	ResponseEntity<Object> consultarDadosConta(@RequestBody AuxAcesso acesso) {
+		List<Object> achou;
+		
+		 achou = validarAcesso(acesso);
+		 
+		 if (achou.size() > 1) {
+			 Cliente cliente = (Cliente) achou.get(0);
+			 
+			 AuxConsultaCliente retorno = new AuxConsultaCliente(cliente.getCodigo_banco(), cliente.getNome_banco() ,cliente.getConta(), cliente.getTelefone_cliente());
 
+			 return ResponseEntity.ok().body(retorno);
+		 }else {
+			 throw new AcessoExcecao();
+		 }
+	 
+	}
 }
