@@ -4,6 +4,7 @@
 package com.fast.caixaMultibanco.recursos;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -80,6 +81,29 @@ public class UserController {
 
 	@GetMapping("/consultarSaldo")
 	ResponseEntity<Object> consultarSaldo(@RequestBody AuxAcesso acesso) {
+		List<Object> achou;
+		
+		 achou = validarAcesso(acesso);
+		 
+		 Cliente achouCliente = (Cliente) achou.get(0);
+		 Acesso achouAcesso = (Acesso) achou.get(1);
+		
+		if(achouCliente != null) {
+			Instant now = Instant.now();
+			if(now.toEpochMilli() > achouAcesso.getTempoFinal()){
+				System.out.println("tempo agora " +now.toEpochMilli() + "tempo que achei " + achouAcesso.getTempoFinal() + " Acabou o tempo");
+				acessoServico.delete(achouAcesso.getId());
+				return null;
+			}else {
+				Locale.setDefault( Locale.US);
+				return ResponseEntity.ok().body(String.format("{ \"saldo\": \"%.2f\"}", achouCliente.getSaldo()));
+			}
+		}
+		return ResponseEntity.badRequest().body(null);
+		
+	}
+	
+	private List<Object> validarAcesso(AuxAcesso acesso) {
 		List<Acesso> lista = acessoServico.findAll();
 		String acc = acesso.getAcesso();
 		Acesso achouAcesso = null;
@@ -90,7 +114,7 @@ public class UserController {
 				achouAcesso = obj;
 			}else {
 				throw new AcessoExcecao();
-			}
+				}
 		}
 		List<Cliente> clientes = clienteServico.findAll();
 		Cliente achouCliente = null;
@@ -107,18 +131,10 @@ public class UserController {
 			}
 		}
 		
-		if(achouCliente != null) {
-			Instant now = Instant.now();
-			if(now.toEpochMilli() > achouAcesso.getTempoFinal()){
-				System.out.println("tempo agora " +now.toEpochMilli() + "tempo que achei " + achouAcesso.getTempoFinal() + " Acabou o tempo");
-				acessoServico.delete(achouAcesso.getId());
-				return null;
-			}else {
-				Locale.setDefault( Locale.US);
-				return ResponseEntity.ok().body(String.format("{ \"saldo\": \"%.2f\"}", achouCliente.getSaldo()));
-			}
-		}
-		return ResponseEntity.badRequest().body(null);
+		List<Object> encontrou = new ArrayList<>();
+		encontrou.add(0, achouCliente);
+		encontrou.add(1, achouAcesso);
+		return encontrou;
 		
 	}
 }
