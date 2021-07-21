@@ -71,7 +71,7 @@ public class CarregarBaseDados {
 			String[] lista = ("Allan Time 3, Francisco Time 3, Gabriel  Time 3, Marilio Time 3, "
 					+ "Thiago Time 2, Raphael Time 2, Eustakio Time 2, Alfredo Time 2, Jeronimo Time 2, "
 					+ "Heitor Time 1, Daniel Time 1, Jonathan Time 1, Neemias Time 1, "
-					+ "Gusta Instrutor, Samuca Instrutor").split(",");
+					+ "Gusta Instrutor, Samuca Instrutor, Alisson Instrutor").split(",");
 			List<Banco> lBancos = banco.findAll();
 			
 			int cont = 1;

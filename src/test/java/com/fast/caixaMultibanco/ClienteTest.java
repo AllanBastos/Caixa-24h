@@ -30,8 +30,8 @@ class ClienteTest {
 	}
 	
 	private void loadClientes() throws Exception {
-		clientes.add(addClienteMock(1, "texto1", 1.00 ));
-		clientes.add(addClienteMock(2, "text2", 2.00));
+		clientes.add(addClienteMock(1, "12345678910111213141", 1.00 ));
+		clientes.add(addClienteMock(2, "12345678910111213141", 2.00));
 	}
 	
 	@MockBean

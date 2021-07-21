@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.fast.caixaMultibanco.entidades.Caixa;
 import com.fast.caixaMultibanco.repositorios.CaixaRepositorio;
+import com.fast.caixaMultibanco.services.excecoes.LoginExcecao;
 
 @Service
 public class CaixaServico {
@@ -21,10 +22,10 @@ public class CaixaServico {
 
 	public Caixa findById(Integer id) {
 		if (id.equals(null)) {
-			return null;
+			return null ;
 		}
 		Optional<Caixa> obj = repository.findById(id);
-		return obj.get();
+		return obj.orElseThrow( () -> new LoginExcecao("Caixa não Encontrado"));
 	}
 
 	public void delete(int id) {

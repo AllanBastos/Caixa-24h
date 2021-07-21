@@ -7,8 +7,6 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Locale;
 
-import javax.security.auth.login.LoginException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +30,7 @@ import com.fast.caixaMultibanco.services.AcessoServico;
 import com.fast.caixaMultibanco.services.CaixaServico;
 import com.fast.caixaMultibanco.services.ClienteServico;
 import com.fast.caixaMultibanco.services.excecoes.AcessoExcecao;
+import com.fast.caixaMultibanco.services.excecoes.LoginExcecao;
 import com.fast.caixaMultibanco.services.excecoes.RecursoNaoEncontradoExcecao;
 import com.fast.caixaMultibanco.services.excecoes.SaqueExcecao;
 import com.fast.caixaMultibanco.services.excecoes.TempoExpiradoException;
@@ -42,7 +41,7 @@ import tools.Criptografar;
  * 
  * @author Maurilio
  * @author allan
- * @version 0.1.0
+ * @version 0.1.5
  */
 
 @RestController
@@ -86,7 +85,7 @@ public class OperacoesController {
 				return auxAcesso;		
 			}
 			else {
-				throw new LoginException("TESTE");
+				throw new LoginExcecao("Caixa não pode ser nullo");
 			}
 	
 		} else {
