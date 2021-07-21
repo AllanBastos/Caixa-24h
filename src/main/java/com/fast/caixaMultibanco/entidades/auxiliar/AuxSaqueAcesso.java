@@ -10,7 +10,7 @@ package com.fast.caixaMultibanco.entidades.auxiliar;
 public class AuxSaqueAcesso {
 	
 	private  AuxAcesso acesso;
-	private Integer valor;
+	private Double valor;
 	
 	/**
 	 * @return the acesso
@@ -27,13 +27,13 @@ public class AuxSaqueAcesso {
 	/**
 	 * @return the valor
 	 */
-	public int getValor() {
+	public Double getValor() {
 		return valor;
 	}
 	/**
 	 * @param valor the valor to set
 	 */
-	public void setValor(int valor) {
+	public void setValor(Double valor) {
 		this.valor = valor;
 	}
 	

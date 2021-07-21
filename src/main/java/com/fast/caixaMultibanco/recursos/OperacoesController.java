@@ -17,16 +17,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fast.caixaMultibanco.Servicos.ServicoClienteBanco;
 import com.fast.caixaMultibanco.entidades.Acesso;
+import com.fast.caixaMultibanco.entidades.Caixa;
 import com.fast.caixaMultibanco.entidades.Cliente;
 import com.fast.caixaMultibanco.entidades.auxiliar.AuxAcesso;
 import com.fast.caixaMultibanco.entidades.auxiliar.AuxCliente;
 import com.fast.caixaMultibanco.entidades.auxiliar.AuxConsultaCliente;
 import com.fast.caixaMultibanco.entidades.auxiliar.AuxLogin;
 import com.fast.caixaMultibanco.entidades.auxiliar.AuxSaqueAcesso;
-import com.fast.caixaMultibanco.entidades.auxiliar.AuxSaqueCedulas;
+import com.fast.caixaMultibanco.entidades.auxiliar.AuxSaqueRetorno;
 import com.fast.caixaMultibanco.services.AcessoServico;
+import com.fast.caixaMultibanco.services.CaixaServico;
 import com.fast.caixaMultibanco.services.ClienteServico;
 import com.fast.caixaMultibanco.services.excecoes.AcessoExcecao;
 import com.fast.caixaMultibanco.services.excecoes.RecursoNaoEncontradoExcecao;
@@ -38,12 +39,12 @@ import tools.Criptografar;
  * 
  * @author Maurilio
  * @author allan
- * @version 0.0.5
+ * @version 0.1.0
  */
 
 @RestController
 @RequestMapping(value = "/banco")
-public class UserController {
+public class OperacoesController {
 
 	@Autowired
 	private AcessoServico acessoServico;
@@ -54,11 +55,8 @@ public class UserController {
 	@Autowired
 	private ClienteServico clienteServico;
 
-//	@Autowired
-//	private CaixaServico caixaServico;
-//	
 	@Autowired
-	private ServicoClienteBanco servicoClienteBanco;
+	private CaixaServico caixaServico;
 
 	@PostMapping("/loginBanco")
 	@ResponseBody
@@ -82,39 +80,69 @@ public class UserController {
 				AuxAcesso auxAcesso = new AuxAcesso();
 				auxAcesso.setAcesso(novoAcesso.getToken());
 				return auxAcesso;
-			}else {
+			} else {
 				throw new RecursoNaoEncontradoExcecao(cliente);
 			}
-			
-		}else {
-			throw new  RecursoNaoEncontradoExcecao(cliente);
+
+		} else {
+			throw new RecursoNaoEncontradoExcecao(cliente);
 		}
 	}
 
 	@GetMapping("/consultarSaldo")
 	ResponseEntity<Object> consultarSaldo(@RequestBody AuxAcesso acesso) {
-
-		Cliente achouCliente = validarAcesso(acesso);
+		Cliente cliente = validarAcesso(acesso).getCliente();
+		System.out.println("AQUI");
 		Locale.setDefault(Locale.US);
-		return ResponseEntity.ok().body(String.format("{ \"saldo\": \"%.2f\"}", achouCliente.getSaldo()));
+		System.out.println("AQUI");
+		return ResponseEntity.ok().body(String.format("{ \"saldo\": \"%.2f\"}", cliente.getSaldo()));
 
 	}
 
 	@PostMapping("/fazerSaque")
-	ResponseEntity<AuxSaqueCedulas> fazerSaque(@RequestBody AuxSaqueAcesso auxSaqueAcesso) {
+	ResponseEntity<AuxSaqueRetorno> fazerSaque(@RequestBody AuxSaqueAcesso auxSaqueAcesso) {
+		Cliente cliente = validarAcesso(auxSaqueAcesso.getAcesso()).getCliente();
+		Caixa caixa = caixaServico.findById(validarAcesso(auxSaqueAcesso.getAcesso()).getCaixa());
+		if (caixa.verificarSaldoSuficiente(auxSaqueAcesso.getValor(), cliente)) {
+			if (caixa.saque(auxSaqueAcesso.getValor()) && auxSaqueAcesso.getValor() >= 2) {
+				int[] notas = caixa.calcularCedulas(auxSaqueAcesso.getValor());
+				cliente.setSaldo(cliente.getSaldo() - auxSaqueAcesso.getValor());
 
+				// FALTA UPDATE E PERSISTENCIA DO CAIXA. -AQUI MESMO.
+				// FALTA UPDATE E PERSITENCIA DO CLIENTE. -AQUI MESMO.
 
-		Cliente achou = validarAcesso(auxSaqueAcesso.getAcesso());	
-		return servicoClienteBanco.saque(achou, achou.getAcesso() ,auxSaqueAcesso.getValor());
-		
+				caixaServico.atualizarCaixa(caixa); // NÃO ESTA FUNCIONANDO.
+
+				System.out.println("SALDO DO CLIENTE ATUALIZADO: " + cliente.getSaldo());
+				System.out.println("QUANTIDADE DE NOTAS ATUALIZADAS: " + caixa);
+
+				AuxSaqueRetorno retorno = new AuxSaqueRetorno(cliente.getCodigo_banco(), cliente.getConta(), notas[3],
+						notas[2], notas[1], notas[0]);
+				return ResponseEntity.ok().body(retorno);
+
+			} else {
+				System.out.println("VALOR INDISPONÍVEL, PROCURE OUTRO CAIXA");
+				/*
+				 * COLOCAR EXCEÇÃO ERRO 350 - "mensagem":
+				 * " VALOR INDISPONÍVEL, PROCURE OUTRO CAIXA"
+				 */
+			}
+
+		} else {
+			System.out.println("SALDO INSUFICIÊNTE");
+			/* COLOCAR EXCEÇÃO ERRO 300 - "mensagem": "SALDO INSUFICIÊNTE" */
+		}
+
+		/* OS RESPONSES 400 E 500, CREIO QUE JÁ ESTÃO NO VALIDAR ACESSO */
+
+		return null;
 
 	}
 
 	@GetMapping("/consultarDadosConta")
 	ResponseEntity<Object> consultarDadosConta(@RequestBody AuxAcesso acesso) {
-		
-		Cliente cliente = validarAcesso(acesso);
-		if(cliente != null) {	
+		Cliente cliente = validarAcesso(acesso).getCliente();
+		if (cliente != null) {
 			AuxConsultaCliente retorno = new AuxConsultaCliente(cliente.getCodigo_banco(), cliente.getNome_banco(),
 					cliente.getConta(), cliente.getNome_cliente(), cliente.getTelefone_cliente());
 			return ResponseEntity.ok().body(retorno);
@@ -126,34 +154,35 @@ public class UserController {
 	@PutMapping("/alterarDadosConta")
 	void alterarCliente(@RequestBody AuxCliente dados) {
 		AuxAcesso acesso = new AuxAcesso(dados.getAcesso());
-		Cliente cliente = validarAcesso(acesso);
+		Cliente cliente = (validarAcesso(acesso).getCliente());
 		cliente.setNome_cliente(dados.getNome_cliente());
 		cliente.setTelefone_cliente(dados.getTelefone_cliente());
 
 		clienteServico.update(cliente.getLogin(), cliente);
 	}
 
-	private Cliente validarAcesso(AuxAcesso acesso) {
-		List<Acesso> lista = acessoServico.findAll();
+	/* Valida o Acesso pelo token e pelo tempo */
+	private Acesso validarAcesso(AuxAcesso acesso) {
+		List<Acesso> listaAcesso = acessoServico.findAll();
 		String acc = acesso.getAcesso();
 		Acesso achouAcesso = null;
 
-		for (Acesso obj : lista) {
+		for (Acesso obj : listaAcesso) {
 			String token = obj.getToken();
 			if (acc.equals(token)) {
 				achouAcesso = obj;
-			} 
+			}
 		}
-		if(achouAcesso == null){
+		if (achouAcesso == null) {
 			throw new AcessoExcecao();
 		}
-		
+
 		Instant now = Instant.now();
 		if (now.toEpochMilli() > achouAcesso.getTempoFinal()) {
 //			acessoServico.delete(achouAcesso.getId());
-				throw new TempoExpiradoException();	
+			throw new TempoExpiradoException();
 		}
-		
+
 		List<Cliente> clientes = clienteServico.findAll();
 		Cliente achouCliente = null;
 
@@ -162,15 +191,15 @@ public class UserController {
 				String tokenCliente = cliente.getAcesso().getToken();
 				if (acc.equals(tokenCliente)) {
 					achouCliente = cliente;
-				} 
+				}
 			}
 		}
-		
-		if(achouCliente == null) {
+
+		if (achouCliente == null) {
 			throw new AcessoExcecao();
 		}
 
-		return achouCliente;
+		return achouAcesso;
 
 	}
 

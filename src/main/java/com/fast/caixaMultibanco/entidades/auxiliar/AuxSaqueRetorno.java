@@ -7,7 +7,7 @@ package com.fast.caixaMultibanco.entidades.auxiliar;
  * @author NOTE-CASA
  *
  */
-public class AuxSaqueCedulas {
+public class AuxSaqueRetorno {
 	
 	private int codigo_banco;
 	private String conta;
@@ -21,6 +21,20 @@ public class AuxSaqueCedulas {
 	public int getCodigo_banco() {
 		return codigo_banco;
 	}
+	
+	
+	public AuxSaqueRetorno(int codigo_banco, String conta, int cedulas_2, int cedulas_5, int cedulas_10,
+			int cedulas_50) {
+		super();
+		this.codigo_banco = codigo_banco;
+		this.conta = conta;
+		this.cedulas_2 = cedulas_2;
+		this.cedulas_5 = cedulas_5;
+		this.cedulas_10 = cedulas_10;
+		this.cedulas_50 = cedulas_50;
+	}
+
+
 	/**
 	 * @param codigo_banco the codigo_banco to set
 	 */
