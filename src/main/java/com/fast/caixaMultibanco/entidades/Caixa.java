@@ -206,7 +206,7 @@ public class Caixa {
 					quantCedulas[2] += 1;
 					valor -= 5;
 				}
-			} else if (quantCedulas[3] < getQtd_cedulas_2() && (valor >= 2) && (valor != 13)) {
+			} else if (quantCedulas[3] < getQtd_cedulas_2() && (valor >= 2) && ((valor % 2 ) == 0)) {
 				if (valor >= 2) {
 					quantCedulas[3] += 1;
 					valor -= 2;
