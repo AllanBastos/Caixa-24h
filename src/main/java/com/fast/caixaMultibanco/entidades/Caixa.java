@@ -163,7 +163,7 @@ public class Caixa {
 	 * @return void.
 	 */
 	public boolean saque(Double valor) {
-		if (valorSuficienteCaixa(valor) && verificarCasaDecimal(valor) && valor > 2) {
+		if (valorSuficienteCaixa(valor) && verificarCasaDecimal(valor)) {
 			int[] quantNotas = calcularCedulas(valor);
 			if (quantNotas != null) {
 				subtrairCedulas(quantNotas);
@@ -175,7 +175,7 @@ public class Caixa {
 			}
 
 		} else {
-			/* System.out.println(" VALOR INDISPONÍVEL, PROCURE OUTRO CAIXA."); */
+			 System.out.println(" VALOR INDISPONÍVEL, PROCURE OUTRO CAIXA."); 
 			return false;
 		}
 
@@ -206,7 +206,7 @@ public class Caixa {
 					quantCedulas[2] += 1;
 					valor -= 5;
 				}
-			} else if (quantCedulas[3] < getQtd_cedulas_2() && (valor >= 2)) {
+			} else if (quantCedulas[3] < getQtd_cedulas_2() && (valor >= 2) && (valor != 13)) {
 				if (valor >= 2) {
 					quantCedulas[3] += 1;
 					valor -= 2;
@@ -215,6 +215,7 @@ public class Caixa {
 				return null;
 			}
 		}
+		System.out.println(quantCedulas);
 		return quantCedulas;
 	}
 
