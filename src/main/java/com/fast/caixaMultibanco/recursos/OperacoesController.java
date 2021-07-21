@@ -65,36 +65,31 @@ public class OperacoesController {
 		Acesso novoAcesso = new Acesso(null, null, null, null, null);
 		Cliente cliente = clienteServico.findById(login.getLogin());
 
-		if (cliente.getSenha().equals(Criptografar.gerarHashMD5(login.getSenha()))) {
-			if (cliente.getConta().equals(login.getConta())) {
-				novoAcesso.setCaixa(login.getCaixa());
-				novoAcesso.setCliente(cliente);
-				Instant now = Instant.now();
-				novoAcesso.setTempoInicial(now.toEpochMilli());
-				novoAcesso.setTempoFinal();
-				novoAcesso.setToken(Criptografar.gerartoken(novoAcesso.getCliente().getLogin()));
-				cliente.setAcesso(novoAcesso);
-				cliente.setDt_acesso(now);
-				acessoServico.insert(novoAcesso);
-				clienteServico.insert(cliente);
-				AuxAcesso auxAcesso = new AuxAcesso();
-				auxAcesso.setAcesso(novoAcesso.getToken());
-				return auxAcesso;
-			} else {
-				throw new RecursoNaoEncontradoExcecao(cliente);
-			}
-
+		if (cliente.getSenha().equals(Criptografar.gerarHashMD5(login.getSenha()))
+				&& cliente.getLogin() == login.getLogin() && cliente.getConta().equals(login.getConta())) {
+			novoAcesso.setCaixa(login.getCaixa());
+			novoAcesso.setCliente(cliente);
+			Instant now = Instant.now();
+			novoAcesso.setTempoInicial(now.toEpochMilli());
+			novoAcesso.setTempoFinal();
+			novoAcesso.setToken(Criptografar.gerartoken(novoAcesso.getCliente().getLogin()));
+			cliente.setAcesso(novoAcesso);
+			cliente.setDt_acesso(now);
+			acessoServico.insert(novoAcesso);
+			AuxAcesso auxAcesso = new AuxAcesso();
+			auxAcesso.setAcesso(novoAcesso.getToken());
+			return auxAcesso;
 		} else {
-			throw new RecursoNaoEncontradoExcecao(cliente);
+			throw new RecursoNaoEncontradoExcecao(
+					cliente); /* PROBLEMA EXCEÇÃO ERRO 300 – conta, usuário ou senha// inválidos(s):S*/
 		}
+
 	}
 
 	@GetMapping("/consultarSaldo")
 	ResponseEntity<Object> consultarSaldo(@RequestBody AuxAcesso acesso) {
 		Cliente cliente = validarAcesso(acesso).getCliente();
-		System.out.println("AQUI");
 		Locale.setDefault(Locale.US);
-		System.out.println("AQUI");
 		return ResponseEntity.ok().body(String.format("{ \"saldo\": \"%.2f\"}", cliente.getSaldo()));
 
 	}
@@ -107,12 +102,7 @@ public class OperacoesController {
 			if (caixa.saque(auxSaqueAcesso.getValor()) && auxSaqueAcesso.getValor() >= 2) {
 				int[] notas = caixa.calcularCedulas(auxSaqueAcesso.getValor());
 				cliente.setSaldo(cliente.getSaldo() - auxSaqueAcesso.getValor());
-
-				// FALTA UPDATE E PERSISTENCIA DO CAIXA. -AQUI MESMO.
-				// FALTA UPDATE E PERSITENCIA DO CLIENTE. -AQUI MESMO.
-
-				caixaServico.atualizarCaixa(caixa); // NÃO ESTA FUNCIONANDO.
-
+				caixaServico.atualizarCaixa(caixa);
 				System.out.println("SALDO DO CLIENTE ATUALIZADO: " + cliente.getSaldo());
 				System.out.println("QUANTIDADE DE NOTAS ATUALIZADAS: " + caixa);
 

@@ -31,7 +31,9 @@ public class ClienteServico {
 	}
 	
 	public Cliente insert(Cliente novoCliente) {
+		System.out.println(novoCliente);
 		return repository.save(novoCliente);
+		
 	}
 	
 	public Cliente update(String id, Cliente obj ) {
