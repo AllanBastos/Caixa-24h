@@ -31,6 +31,7 @@ import com.fast.caixaMultibanco.services.CaixaServico;
 import com.fast.caixaMultibanco.services.ClienteServico;
 import com.fast.caixaMultibanco.services.excecoes.AcessoExcecao;
 import com.fast.caixaMultibanco.services.excecoes.RecursoNaoEncontradoExcecao;
+import com.fast.caixaMultibanco.services.excecoes.SaqueExcecao;
 import com.fast.caixaMultibanco.services.excecoes.TempoExpiradoException;
 
 import tools.Criptografar;
@@ -81,7 +82,7 @@ public class OperacoesController {
 			return auxAcesso;
 		} else {
 			throw new RecursoNaoEncontradoExcecao(
-					cliente); /* PROBLEMA EXCEÇÃO ERRO 300 – conta, usuário ou senha// inválidos(s):S*/
+					cliente.getLogin()); /* PROBLEMA EXCEÇÃO ERRO 300 – conta, usuário ou senha// inválidos(s):S*/
 		}
 
 	}
@@ -111,22 +112,21 @@ public class OperacoesController {
 				return ResponseEntity.ok().body(retorno);
 
 			} else {
-				System.out.println("VALOR INDISPONÍVEL, PROCURE OUTRO CAIXA");
+//				System.out.println("VALOR INDISPONÍVEL, PROCURE OUTRO CAIXA");
 				/*
-				 * COLOCAR EXCEÇÃO ERRO 350 - "mensagem":
+				 * EXCEÇÃO ERRO 300 - "mensagem":
 				 * " VALOR INDISPONÍVEL, PROCURE OUTRO CAIXA"
 				 */
+				throw new SaqueExcecao(" VALOR INDISPONÍVEL, PROCURE OUTRO CAIXA");
+				
 			}
 
 		} else {
-			System.out.println("SALDO INSUFICIÊNTE");
-			/* COLOCAR EXCEÇÃO ERRO 300 - "mensagem": "SALDO INSUFICIÊNTE" */
+//			System.out.println("SALDO INSUFICIÊNTE");
+			/* EXCEÇÃO ERRO 300 - "mensagem": "SALDO INSUFICIÊNTE" */
+			throw new SaqueExcecao("SALDO INSUFICIÊNTE");
+			
 		}
-
-		/* OS RESPONSES 400 E 500, CREIO QUE JÁ ESTÃO NO VALIDAR ACESSO */
-
-		return null;
-
 	}
 
 	@GetMapping("/consultarDadosConta")

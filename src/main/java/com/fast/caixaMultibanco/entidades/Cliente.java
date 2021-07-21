@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import com.fast.caixaMultibanco.entidades.excecao.EntitiesException;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
@@ -50,7 +51,6 @@ public class Cliente {
 	@Column(nullable = true)
 	@JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd'T'HH:ss'Z'", timezone = "GMT")
 	private Instant dt_acesso; // data e hora da geração do acesso.
-	private Instant dt_logout;
 
 	/**
 	 * 
@@ -83,7 +83,12 @@ public class Cliente {
 	 * @param nome_cliente the nome_cliente to set
 	 */
 	public void setNome_cliente(String nome_cliente) {
-		this.nome_cliente = nome_cliente;
+		if ( nome_cliente.length() >= 3) {
+		
+			this.nome_cliente = nome_cliente;
+		}else {
+			throw new EntitiesException("Nome do cliente Invalido: " + nome_cliente);
+		}
 	}
 
 	/**
@@ -97,7 +102,12 @@ public class Cliente {
 	 * @param telefone_cliente the telefone_cliente to set
 	 */
 	public void setTelefone_cliente(String telefone_cliente) {
-		this.telefone_cliente = telefone_cliente;
+		if(telefone_cliente.length() >= 11) {
+			
+			this.telefone_cliente = telefone_cliente;
+		}else {
+			throw new EntitiesException("Telefone do cliente Incorreto: " + telefone_cliente);
+		}
 	}
 
 	/**
@@ -163,6 +173,9 @@ public class Cliente {
 	 * @param conta the conta to set
 	 */
 	public void setConta(String conta) {
+		if (conta.length() != 20) {
+			throw new EntitiesException("Conta incorreta: " + conta + "o numero da conta deve conter 20 digitos");
+		}
 		this.conta = conta;
 	}
 
@@ -209,15 +222,6 @@ public class Cliente {
 		dt_acesso = data;
 	}
 	
-
-	public Instant getDt_logout() {
-		return dt_logout;
-	}
-
-	public void setDt_logout() {
-		this.dt_logout = Instant.ofEpochMilli(getDt_acesso().toEpochMilli() + 4000);
-	}
-	
 	
 	/**
 	 * @param acesso the acesso to set
@@ -253,8 +257,7 @@ public class Cliente {
 	public String toString() {
 		return "Cliente [login=" + login + ", nome_cliente=" + nome_cliente + ", telefone_cliente=" + telefone_cliente
 				+ ", senha=" + senha + ", codigo_banco=" + codigo_banco + ", nome_banco=" + nome_banco + ", conta="
-				+ conta + ", saldo=" + saldo + ", acesso=" + acesso + ", dt_acesso=" + dt_acesso + ", dt_logout="
-				+ dt_logout + "]";
+				+ conta + ", saldo=" + saldo + ", acesso=" + acesso + ", dt_acesso=" + dt_acesso + "]";
 	}
 	
 

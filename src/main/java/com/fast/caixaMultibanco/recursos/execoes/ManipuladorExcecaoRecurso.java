@@ -35,13 +35,6 @@ public class ManipuladorExcecaoRecurso {
 		return ResponseEntity.status(status).body(err);
 	}
 	
-	@ExceptionHandler(RuntimeException.class)
-	public ResponseEntity<Object> ErroAplicação(RuntimeException e, HttpServletRequest request ){
-		String error = "Erro na aplicação";
-		HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;	
-		return ResponseEntity.status(status).body(error);
-	}
-	
 	@ExceptionHandler(SaqueExcecao.class)
 	public ResponseEntity<Object> ErroAplicação(SaqueExcecao e, HttpServletRequest request ){
 		HttpStatus status = HttpStatus.MULTIPLE_CHOICES;	
@@ -54,6 +47,14 @@ public class ManipuladorExcecaoRecurso {
 	public ResponseEntity<ErroPadrao> TempoEspirado(TempoExpiradoException e, HttpServletRequest request){
 		String error = "Tempo Esgotado";
 		HttpStatus status = HttpStatus.BAD_REQUEST;
+		ErroPadrao err = new ErroPadrao(Instant.now(), status.value(), error, e.getMessage(),  request.getRequestURI());
+		return ResponseEntity.status(status).body(err);
+	}
+	
+	@ExceptionHandler(RuntimeException.class)
+	public ResponseEntity<Object> ErroAplicação(RuntimeException e, HttpServletRequest request ){
+		String error = "Erro na aplicação";
+		HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;	
 		ErroPadrao err = new ErroPadrao(Instant.now(), status.value(), error, e.getMessage(),  request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 	}
