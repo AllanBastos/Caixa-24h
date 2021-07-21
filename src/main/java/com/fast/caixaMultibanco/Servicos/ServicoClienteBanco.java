@@ -124,7 +124,7 @@ public class ServicoClienteBanco {
 
 			Caixa caixa = caixaServico.findById(acesso.getCaixa());
 
-			if (caixa != null) {
+			if (caixa == null) {
 				throw new AcessoExcecao();
 			}
 			
