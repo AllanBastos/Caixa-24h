@@ -65,9 +65,11 @@ public class OperacoesController {
 
 		Acesso novoAcesso = new Acesso(null, null, null, null, null);
 		Cliente cliente = clienteServico.findById(login.getLogin());
+		Caixa caixa = caixaServico.findById(login.getCaixa());
 
 		if (cliente.getSenha().equals(Criptografar.gerarHashMD5(login.getSenha()))
-				&& cliente.getLogin() == login.getLogin() && cliente.getConta().equals(login.getConta())) {
+				&& cliente.getLogin() == login.getLogin() && cliente.getConta().equals(login.getConta())
+				&& caixa != null) {
 			novoAcesso.setCaixa(login.getCaixa());
 			novoAcesso.setCliente(cliente);
 			Instant now = Instant.now();
@@ -82,7 +84,7 @@ public class OperacoesController {
 			return auxAcesso;
 		} else {
 			throw new RecursoNaoEncontradoExcecao(
-					cliente.getLogin()); /* PROBLEMA EXCEÇÃO ERRO 300 – conta, usuário ou senha// inválidos(s):S*/
+					cliente.getLogin()); /* PROBLEMA EXCEÇÃO ERRO 300 – conta, usuário ou senha// inválidos(s):S */
 		}
 
 	}
@@ -114,18 +116,17 @@ public class OperacoesController {
 			} else {
 //				System.out.println("VALOR INDISPONÍVEL, PROCURE OUTRO CAIXA");
 				/*
-				 * EXCEÇÃO ERRO 300 - "mensagem":
-				 * " VALOR INDISPONÍVEL, PROCURE OUTRO CAIXA"
+				 * EXCEÇÃO ERRO 300 - "mensagem": " VALOR INDISPONÍVEL, PROCURE OUTRO CAIXA"
 				 */
 				throw new SaqueExcecao(" VALOR INDISPONÍVEL, PROCURE OUTRO CAIXA");
-				
+
 			}
 
 		} else {
 //			System.out.println("SALDO INSUFICIÊNTE");
 			/* EXCEÇÃO ERRO 300 - "mensagem": "SALDO INSUFICIÊNTE" */
 			throw new SaqueExcecao("SALDO INSUFICIÊNTE");
-			
+
 		}
 	}
 

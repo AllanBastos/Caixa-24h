@@ -20,8 +20,10 @@ public class CaixaServico {
 	}
 
 	public Caixa findById(Integer id) {
+		if (id.equals(null)) {
+			return null;
+		}
 		Optional<Caixa> obj = repository.findById(id);
-
 		return obj.get();
 	}
 
