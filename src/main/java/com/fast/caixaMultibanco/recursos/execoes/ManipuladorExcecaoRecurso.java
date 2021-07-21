@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.fast.caixaMultibanco.services.excecoes.AcessoExcecao;
+import com.fast.caixaMultibanco.services.excecoes.LoginExcecao;
 import com.fast.caixaMultibanco.services.excecoes.SaqueExcecao;
 import com.fast.caixaMultibanco.services.excecoes.TempoExpiradoException;
 import com.fast.caixaMultibanco.services.excecoes.RecursoNaoEncontradoExcecao;
@@ -56,6 +57,14 @@ public class ManipuladorExcecaoRecurso {
 		String error = "Erro na aplicação";
 		HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;	
 		ErroPadrao err = new ErroPadrao(Instant.now(), status.value(), error, e.getMessage(),  request.getRequestURI());
+		return ResponseEntity.status(status).body(err);
+	}
+	
+	@ExceptionHandler(LoginExcecao.class)
+	public ResponseEntity<ErroPadrao> LoginExcecao(LoginExcecao e, HttpServletRequest request ){
+		String error = "Não existe caixa com esse id:";
+		HttpStatus status = HttpStatus.BAD_REQUEST;
+		ErroPadrao err = new ErroPadrao(Instant.now(), status.value(), error, e.getMessage(),  request.getRequestURI());	
 		return ResponseEntity.status(status).body(err);
 	}
 	

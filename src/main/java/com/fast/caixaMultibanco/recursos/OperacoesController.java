@@ -7,6 +7,8 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Locale;
 
+import javax.security.auth.login.LoginException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -68,20 +70,25 @@ public class OperacoesController {
 		Caixa caixa = caixaServico.findById(login.getCaixa());
 
 		if (cliente.getSenha().equals(Criptografar.gerarHashMD5(login.getSenha()))
-				&& cliente.getLogin() == login.getLogin() && cliente.getConta().equals(login.getConta())
-				&& caixa != null) {
-			novoAcesso.setCaixa(login.getCaixa());
-			novoAcesso.setCliente(cliente);
-			Instant now = Instant.now();
-			novoAcesso.setTempoInicial(now.toEpochMilli());
-			novoAcesso.setTempoFinal();
-			novoAcesso.setToken(Criptografar.gerartoken(novoAcesso.getCliente().getLogin()));
-			cliente.setAcesso(novoAcesso);
-			cliente.setDt_acesso(now);
-			acessoServico.insert(novoAcesso);
-			AuxAcesso auxAcesso = new AuxAcesso();
-			auxAcesso.setAcesso(novoAcesso.getToken());
-			return auxAcesso;
+				&& cliente.getLogin() == login.getLogin() && cliente.getConta().equals(login.getConta())) {
+			if(caixa != null) {
+				novoAcesso.setCaixa(login.getCaixa());
+				novoAcesso.setCliente(cliente);
+				Instant now = Instant.now();
+				novoAcesso.setTempoInicial(now.toEpochMilli());
+				novoAcesso.setTempoFinal();
+				novoAcesso.setToken(Criptografar.gerartoken(novoAcesso.getCliente().getLogin()));
+				cliente.setAcesso(novoAcesso);
+				cliente.setDt_acesso(now);
+				acessoServico.insert(novoAcesso);
+				AuxAcesso auxAcesso = new AuxAcesso();
+				auxAcesso.setAcesso(novoAcesso.getToken());
+				return auxAcesso;		
+			}
+			else {
+				throw new LoginException("TESTE");
+			}
+	
 		} else {
 			throw new RecursoNaoEncontradoExcecao(
 					cliente.getLogin()); /* PROBLEMA EXCEÇÃO ERRO 300 – conta, usuário ou senha// inválidos(s):S */
