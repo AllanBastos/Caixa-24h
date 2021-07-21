@@ -10,7 +10,7 @@ package com.fast.caixaMultibanco.entidades.auxiliar;
 public class AuxSaqueAcesso {
 	
 	private  AuxAcesso acesso;
-	private int valor;
+	private Integer valor;
 	
 	/**
 	 * @return the acesso

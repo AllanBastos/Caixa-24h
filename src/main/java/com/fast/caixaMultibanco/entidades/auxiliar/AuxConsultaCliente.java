@@ -4,6 +4,7 @@ public class AuxConsultaCliente {
 	
 	private int codigo_banco;
 	private String nome_banco;
+	private String conta;
 	private String nome_cliente;
 	private String telefone_cliente;
 	
@@ -16,12 +17,13 @@ public class AuxConsultaCliente {
 	 * @param nome_cliente
 	 * @param telefone_cliente
 	 */
-	public AuxConsultaCliente(int codigo_banco, String nome_banco, String nome_cliente, String telefone_cliente) {
+	public AuxConsultaCliente(int codigo_banco, String nome_banco, String conta, String nome_cliente, String telefone_cliente) {
 		super();
 		this.codigo_banco = codigo_banco;
 		this.nome_banco = nome_banco;
 		this.nome_cliente = nome_cliente;
 		this.telefone_cliente = telefone_cliente;
+		this.conta = conta;
 	}
 
 
@@ -81,4 +83,19 @@ public class AuxConsultaCliente {
 	public void setTelefone_cliente(String telefone_cliente) {
 		this.telefone_cliente = telefone_cliente;
 	}
+
+	/**
+	 * @return the conta
+	 */
+	public String getConta() {
+		return conta;
+	}
+
+	/**
+	 * @param conta the conta to set
+	 */
+	public void setConta(String conta) {
+		this.conta = conta;
+	}
+	
 }

@@ -1,9 +1,9 @@
 package com.fast.caixaMultibanco.services.excecoes;
 
-public class recursoNaoEncontradoExcecao extends RuntimeException {
+public class RecursoNaoEncontradoExcecao extends RuntimeException {
 	static final long serialVersionUID = 1L;
 
-	public recursoNaoEncontradoExcecao(Object id) {
+	public RecursoNaoEncontradoExcecao(Object id) {
 		super("Recurso não encontrado. Id " + id);
 	}
 

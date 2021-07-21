@@ -3,9 +3,9 @@
  */
 package com.fast.caixaMultibanco.Servicos;
 
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Stack;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +15,8 @@ import org.springframework.stereotype.Service;
 import com.fast.caixaMultibanco.entidades.Acesso;
 import com.fast.caixaMultibanco.entidades.Caixa;
 import com.fast.caixaMultibanco.entidades.Cliente;
-import com.fast.caixaMultibanco.entidades.auxiliar.AuxSaqueAcesso;
 import com.fast.caixaMultibanco.entidades.auxiliar.AuxSaqueCedulas;
-import com.fast.caixaMultibanco.repositorios.BancoRepositorio;
-import com.fast.caixaMultibanco.repositorios.ClienteRepositorio;
 import com.fast.caixaMultibanco.services.CaixaServico;
-import com.fast.caixaMultibanco.services.ClienteServico;
 import com.fast.caixaMultibanco.services.excecoes.AcessoExcecao;
 
 /**
@@ -30,8 +26,8 @@ import com.fast.caixaMultibanco.services.excecoes.AcessoExcecao;
 @Service
 public class ServicoClienteBanco {
 
-	@Autowired
-	private ClienteServico clienteServico;
+//	@Autowired
+//	private ClienteServico clienteServico;
 
 	@Autowired
 	private CaixaServico caixaServico;
@@ -120,7 +116,7 @@ public class ServicoClienteBanco {
 
 	}
 
-	public ResponseEntity<AuxSaqueCedulas> saque(Cliente cliente, Acesso acesso, int valor) {
+	public ResponseEntity<AuxSaqueCedulas> saque(Cliente cliente, Acesso acesso, Integer valor) {
 
 		Double saldo = cliente.getSaldo();
 
@@ -133,6 +129,7 @@ public class ServicoClienteBanco {
 			}
 			
 			List<Integer> moedas = new ArrayList<>(Arrays.asList(2, 5, 10, 50));
+			@SuppressWarnings("null")
 			int[] quantidade = { caixa.getQtd_cedulas_2(), caixa.getQtd_cedulas_5(), caixa.getQtd_cedulas_10(),
 					caixa.getQtd_cedulas_50() };
 
