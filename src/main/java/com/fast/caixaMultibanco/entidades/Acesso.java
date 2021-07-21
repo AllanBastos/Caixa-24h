@@ -130,7 +130,7 @@ public class Acesso {
 	 * @param tempoFinal the tempoFinal to set
 	 */
 	public void setTempoFinal() {
-		this.tempoFinal = getTempoInicial() + 60000; //900000 Representa 15 minutos
+		this.tempoFinal = getTempoInicial() + 900000; //900000 Representa 15 minutos
 	}
 
 	/**
