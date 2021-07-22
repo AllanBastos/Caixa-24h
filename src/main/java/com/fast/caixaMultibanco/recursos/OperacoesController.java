@@ -26,6 +26,8 @@ import com.fast.caixaMultibanco.entidades.auxiliar.AuxConsultaCliente;
 import com.fast.caixaMultibanco.entidades.auxiliar.AuxLogin;
 import com.fast.caixaMultibanco.entidades.auxiliar.AuxSaqueAcesso;
 import com.fast.caixaMultibanco.entidades.auxiliar.AuxSaqueRetorno;
+import com.fast.caixaMultibanco.entidades.auxiliar.AuxTransferencia;
+import com.fast.caixaMultibanco.entidades.auxiliar.AuxTransferenciaRetorno;
 import com.fast.caixaMultibanco.services.AcessoServico;
 import com.fast.caixaMultibanco.services.CaixaServico;
 import com.fast.caixaMultibanco.services.ClienteServico;
@@ -106,11 +108,11 @@ public class OperacoesController {
 	ResponseEntity<AuxSaqueRetorno> fazerSaque(@RequestBody AuxSaqueAcesso auxSaqueAcesso) {
 		Cliente cliente = validarAcesso(auxSaqueAcesso.getAcesso()).getCliente();
 		Caixa caixa = caixaServico.findById(validarAcesso(auxSaqueAcesso.getAcesso()).getCaixa());
-		
-		if( auxSaqueAcesso.getValor() < 2) {
+
+		if (auxSaqueAcesso.getValor() < 2) {
 			throw new SaqueExcecao("VALOR INVALIDO, FAVOR DIGITAR UM VALOR VALIDO");
 		}
-		
+
 		if (caixa.verificarSaldoSuficiente(auxSaqueAcesso.getValor(), cliente)) {
 			if (caixa.verificarCasaDecimal(auxSaqueAcesso.getValor())) {
 				if (caixa.saque(auxSaqueAcesso.getValor()) && auxSaqueAcesso.getValor() >= 2) {
@@ -134,7 +136,7 @@ public class OperacoesController {
 				}
 			} else {
 				throw new SaqueExcecao("VALOR NÃO É INTEIRO", 408);// 408 - quando valor for quebrado. O
-																					// valor não é inteiro
+																	// valor não é inteiro
 			}
 
 		} else {
@@ -209,4 +211,30 @@ public class OperacoesController {
 
 	}
 
+	@PostMapping("/transferencia")
+	ResponseEntity<AuxTransferenciaRetorno> transferencia(@RequestBody AuxTransferencia auxTranferencia) {
+		Cliente cliente = validarAcesso(auxTranferencia.getAcesso()).getCliente();
+		if (auxTranferencia.getValor() > 0) {
+			if (cliente.getSaldo() >= auxTranferencia.getValor()) {
+				Cliente cliente_destino = auxTranferencia.contaDestino(this.clienteServico.findAll(),
+						auxTranferencia.getConta_destino());
+				if (cliente_destino != null) {
+//					cliente.setSaldo(cliente.getSaldo() - auxTranferencia.getValor());
+//					cliente_destino.setSaldo(cliente_destino.getSaldo() + auxTranferencia.getValor());
+					clienteServico.debitarSaldo(cliente.getLogin(), auxTranferencia.getValor());
+					clienteServico.receberSaldo(cliente_destino.getLogin(), auxTranferencia.getValor());
+
+					AuxTransferenciaRetorno retorno = new AuxTransferenciaRetorno(cliente.getNome_cliente(),
+							cliente.getConta(), auxTranferencia.getValor(), cliente_destino.getNome_cliente(),
+							cliente_destino.getConta());
+					return ResponseEntity.ok().body(retorno);
+				} else {
+					throw new SaqueExcecao("CLIENTE NÂO ENCONTRADO"); // PERSONALIZAR
+				}
+			} else {
+				throw new SaqueExcecao("SALDO INSUFICIÊNTE"); // PERSONALIZAR
+			}
+		}
+		throw new SaqueExcecao("TRANSAÇÃO NÃO REALIZADA, DIGITE UM VALOR MAIOR QUE 0"); // PERSONALIZAR
+	}
 }

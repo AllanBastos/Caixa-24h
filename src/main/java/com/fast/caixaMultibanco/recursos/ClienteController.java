@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fast.caixaMultibanco.entidades.Cliente;
+import com.fast.caixaMultibanco.entidades.excecao.EntitiesException;
 import com.fast.caixaMultibanco.services.ClienteServico;
-
 
 @RestController
 @RequestMapping(value = "/clientes")
@@ -22,20 +22,20 @@ public class ClienteController {
 
 	@Autowired
 	private ClienteServico service;
-	
+
 	@GetMapping
 	public ResponseEntity<List<Cliente>> findAll() {
 		List<Cliente> list = service.findAll();
-		return ResponseEntity.ok().body(list);		
+		return ResponseEntity.ok().body(list);
 	}
-	
+
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Cliente> findById(@PathVariable String id){
+	public ResponseEntity<Cliente> findById(@PathVariable String id) {
 		Cliente obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
-	}	
-	
-	@PostMapping
+	}
+
+	@PostMapping("/cadastro")
 	Cliente novoCliente(@RequestBody Cliente novoCliente) {
 		return service.insert(novoCliente);
 	}

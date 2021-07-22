@@ -43,11 +43,10 @@ public class Cliente {
 	private String conta; // [Obrigatório]
 	@Column(nullable = false)
 	private Double saldo; // [Obrigatório] valor decimal com o saldo da conta do cliente;
-	
-	
+
 	@OneToOne
 	private Acesso acesso; // Acesso com código temporário para operações (alfanumérico de 64 caracteres).
-	
+
 	@Column(nullable = true)
 	@JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd'T'HH:ss'Z'", timezone = "GMT")
 	private Instant dt_acesso; // data e hora da geração do acesso.
@@ -83,10 +82,10 @@ public class Cliente {
 	 * @param nome_cliente the nome_cliente to set
 	 */
 	public void setNome_cliente(String nome_cliente) {
-		if ( nome_cliente.length() >= 3) {
-		
+		if (nome_cliente.length() >= 3) {
+
 			this.nome_cliente = nome_cliente;
-		}else {
+		} else {
 			throw new EntitiesException("Nome do cliente Invalido: " + nome_cliente);
 		}
 	}
@@ -102,10 +101,10 @@ public class Cliente {
 	 * @param telefone_cliente the telefone_cliente to set
 	 */
 	public void setTelefone_cliente(String telefone_cliente) {
-		if(telefone_cliente.length() >= 11) {
-			
+		if (telefone_cliente.length() >= 11) {
+
 			this.telefone_cliente = telefone_cliente;
-		}else {
+		} else {
 			throw new EntitiesException("Telefone do cliente Incorreto: " + telefone_cliente);
 		}
 	}
@@ -121,7 +120,12 @@ public class Cliente {
 	 * @param login the login to set
 	 */
 	public void setLogin(String login) {
-		this.login = login;
+		if (login.length() >= 10) {
+
+			this.login = login;
+		} else {
+			throw new EntitiesException("Login muito curto: " + login);
+		}
 	}
 
 	/**
@@ -136,9 +140,11 @@ public class Cliente {
 	 * @throws Exception
 	 */
 	public void setSenha(String senha) throws Exception {
-		this.senha = Criptografar.gerarHashMD5(senha);
-
-//		this.senha = Criptografia:gerarHashMD5(senha);
+		if (senha.length() >= 3) {
+			this.senha = Criptografar.gerarHashMD5(senha);
+		} else {
+			throw new EntitiesException("Senha muito curta ou sem senha:" + telefone_cliente);
+		}
 	}
 
 	/**
@@ -159,7 +165,11 @@ public class Cliente {
 	 * @param nome_banco the nome_banco to set
 	 */
 	public void setNome_banco(String nome_banco) {
-		this.nome_banco = nome_banco;
+		if (senha.length() >= 3) {
+			this.nome_banco = nome_banco;
+		} else {
+			throw new EntitiesException("Digite o nome do banco:" + nome_banco);
+		}
 	}
 
 	/**
@@ -183,7 +193,11 @@ public class Cliente {
 	 * @param codigo_banco the codigo_banco to set
 	 */
 	public void setCodigo_banco(int codigo_banco) {
-		this.codigo_banco = codigo_banco;
+		if (senha.length() >= 3) {
+			this.codigo_banco = codigo_banco;
+		} else {
+			throw new EntitiesException("Digite o código do banco:" + codigo_banco);
+		}
 	}
 
 	/**
@@ -221,8 +235,7 @@ public class Cliente {
 	public void setDt_acesso(Instant data) throws ParseException {
 		dt_acesso = data;
 	}
-	
-	
+
 	/**
 	 * @param acesso the acesso to set
 	 */
@@ -259,6 +272,5 @@ public class Cliente {
 				+ ", senha=" + senha + ", codigo_banco=" + codigo_banco + ", nome_banco=" + nome_banco + ", conta="
 				+ conta + ", saldo=" + saldo + ", acesso=" + acesso + ", dt_acesso=" + dt_acesso + "]";
 	}
-	
 
 }
