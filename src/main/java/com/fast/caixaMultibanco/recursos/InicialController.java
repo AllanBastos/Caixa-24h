@@ -94,7 +94,7 @@ public class InicialController {
 				+ "                {  <br>\r\n"
 				+ "                     &nbsp; <span>\"acesso\"</span>: \"EDDA8F2DA1428C789F3D599432188D1B687BCCD18ECD02400498721AB4C60D59\", <br>\r\n"
 				+ "                     &nbsp; <span>\"nome_cliente\"</span>: \"nome do cliente\", <br>\r\n"
-				+ "                     &nbsp; <span>\"telefone\"</span>: \"00 00000-0000\", <br>\r\n"
+				+ "                     &nbsp; <span>\"telefone_cliente\"</span>: \"00 00000-0000\", <br>\r\n"
 				+ "                }   \r\n"
 				+ "            </h5>\r\n"
 				+ "        </div>\r\n"
