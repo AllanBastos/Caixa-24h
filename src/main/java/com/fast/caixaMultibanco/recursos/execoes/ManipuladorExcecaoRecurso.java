@@ -60,7 +60,7 @@ public class ManipuladorExcecaoRecurso {
 	}
 	
 	@ExceptionHandler(TransferenciaExcecao.class)
-	public ResponseEntity<Object> ErroTransferencia(SaqueExcecao e, HttpServletRequest request ){
+	public ResponseEntity<Object> ErroTransferencia(TransferenciaExcecao e, HttpServletRequest request ){
 		HttpStatus status;		
 		status = HttpStatus.MULTIPLE_CHOICES;	
 		String error = "Falha na transferencia";
