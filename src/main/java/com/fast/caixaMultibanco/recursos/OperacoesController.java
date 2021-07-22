@@ -36,6 +36,7 @@ import com.fast.caixaMultibanco.services.excecoes.LoginExcecao;
 import com.fast.caixaMultibanco.services.excecoes.RecursoNaoEncontradoExcecao;
 import com.fast.caixaMultibanco.services.excecoes.SaqueExcecao;
 import com.fast.caixaMultibanco.services.excecoes.TempoExpiradoException;
+import com.fast.caixaMultibanco.services.excecoes.TransferenciaExcecao;
 
 import tools.Criptografar;
 
@@ -229,12 +230,12 @@ public class OperacoesController {
 							cliente_destino.getConta());
 					return ResponseEntity.ok().body(retorno);
 				} else {
-					throw new SaqueExcecao("CLIENTE NÂO ENCONTRADO"); // PERSONALIZAR
+					throw new TransferenciaExcecao("CLIENTE DE DESTINO NÃO ENCONTRADO"); // PERSONALIZAR
 				}
 			} else {
-				throw new SaqueExcecao("SALDO INSUFICIÊNTE"); // PERSONALIZAR
+				throw new TransferenciaExcecao("SALDO INSUFICIÊNTE"); // PERSONALIZAR
 			}
 		}
-		throw new SaqueExcecao("TRANSAÇÃO NÃO REALIZADA, DIGITE UM VALOR MAIOR QUE 0"); // PERSONALIZAR
+		throw new TransferenciaExcecao("TRANSAÇÃO NÃO REALIZADA, DIGITE UM VALOR MAIOR QUE 0"); // PERSONALIZAR
 	}
 }

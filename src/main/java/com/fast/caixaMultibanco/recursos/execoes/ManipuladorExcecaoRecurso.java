@@ -15,6 +15,7 @@ import com.fast.caixaMultibanco.services.excecoes.LoginExcecao;
 import com.fast.caixaMultibanco.services.excecoes.RecursoNaoEncontradoExcecao;
 import com.fast.caixaMultibanco.services.excecoes.SaqueExcecao;
 import com.fast.caixaMultibanco.services.excecoes.TempoExpiradoException;
+import com.fast.caixaMultibanco.services.excecoes.TransferenciaExcecao;
  
 /**
  * Classe de exceção
@@ -45,7 +46,7 @@ public class ManipuladorExcecaoRecurso {
 	}
 	
 	@ExceptionHandler(SaqueExcecao.class)
-	public ResponseEntity<Object> ErroAplicação(SaqueExcecao e, HttpServletRequest request ){
+	public ResponseEntity<Object> FalhaSaque(SaqueExcecao e, HttpServletRequest request ){
 		HttpStatus status;
 		if (e.tipo == 1) {			
 			status = HttpStatus.MULTIPLE_CHOICES;	
@@ -54,6 +55,15 @@ public class ManipuladorExcecaoRecurso {
 		}
 
 		String error = "Falha no saque";
+		ErroPadrao err = new ErroPadrao(Instant.now(), status.value(), error, e.getMessage(),  request.getRequestURI());
+		return ResponseEntity.status(status).body(err);
+	}
+	
+	@ExceptionHandler(TransferenciaExcecao.class)
+	public ResponseEntity<Object> ErroTransferencia(SaqueExcecao e, HttpServletRequest request ){
+		HttpStatus status;		
+		status = HttpStatus.MULTIPLE_CHOICES;	
+		String error = "Falha na transferencia";
 		ErroPadrao err = new ErroPadrao(Instant.now(), status.value(), error, e.getMessage(),  request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 	}
