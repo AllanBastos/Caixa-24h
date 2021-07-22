@@ -70,7 +70,7 @@ public class OperacoesController {
 
 		if (cliente.getSenha().equals(Criptografar.gerarHashMD5(login.getSenha()))
 				&& cliente.getLogin() == login.getLogin() && cliente.getConta().equals(login.getConta())) {
-			if(caixa != null) {
+			if (caixa != null) {
 				novoAcesso.setCaixa(login.getCaixa());
 				novoAcesso.setCliente(cliente);
 				Instant now = Instant.now();
@@ -82,12 +82,11 @@ public class OperacoesController {
 				acessoServico.insert(novoAcesso);
 				AuxAcesso auxAcesso = new AuxAcesso();
 				auxAcesso.setAcesso(novoAcesso.getToken());
-				return auxAcesso;		
-			}
-			else {
+				return auxAcesso;
+			} else {
 				throw new LoginExcecao("Caixa não pode ser nullo");
 			}
-	
+
 		} else {
 			throw new RecursoNaoEncontradoExcecao(
 					cliente.getLogin()); /* PROBLEMA EXCEÇÃO ERRO 300 – conta, usuário ou senha// inválidos(s):S */
@@ -107,25 +106,35 @@ public class OperacoesController {
 	ResponseEntity<AuxSaqueRetorno> fazerSaque(@RequestBody AuxSaqueAcesso auxSaqueAcesso) {
 		Cliente cliente = validarAcesso(auxSaqueAcesso.getAcesso()).getCliente();
 		Caixa caixa = caixaServico.findById(validarAcesso(auxSaqueAcesso.getAcesso()).getCaixa());
+		
+		if( auxSaqueAcesso.getValor() < 2) {
+			throw new SaqueExcecao("VALOR INVALIDO, FAVOR DIGITAR UM VALOR VALIDO");
+		}
+		
 		if (caixa.verificarSaldoSuficiente(auxSaqueAcesso.getValor(), cliente)) {
-			if (caixa.saque(auxSaqueAcesso.getValor()) && auxSaqueAcesso.getValor() >= 2) {
-				int[] notas = caixa.calcularCedulas(auxSaqueAcesso.getValor());
-				cliente.setSaldo(cliente.getSaldo() - auxSaqueAcesso.getValor());
-				caixaServico.atualizarCaixa(caixa);
-				System.out.println("SALDO DO CLIENTE ATUALIZADO: " + cliente.getSaldo());
-				System.out.println("QUANTIDADE DE NOTAS ATUALIZADAS: " + caixa);
+			if (caixa.verificarCasaDecimal(auxSaqueAcesso.getValor())) {
+				if (caixa.saque(auxSaqueAcesso.getValor()) && auxSaqueAcesso.getValor() >= 2) {
+					int[] notas = caixa.calcularCedulas(auxSaqueAcesso.getValor());
+					cliente.setSaldo(cliente.getSaldo() - auxSaqueAcesso.getValor());
+					caixaServico.atualizarCaixa(caixa);
+					System.out.println("SALDO DO CLIENTE ATUALIZADO: " + cliente.getSaldo());
+					System.out.println("QUANTIDADE DE NOTAS ATUALIZADAS: " + caixa);
 
-				AuxSaqueRetorno retorno = new AuxSaqueRetorno(cliente.getCodigo_banco(), cliente.getConta(), notas[3],
-						notas[2], notas[1], notas[0]);
-				return ResponseEntity.ok().body(retorno);
+					AuxSaqueRetorno retorno = new AuxSaqueRetorno(cliente.getCodigo_banco(), cliente.getConta(),
+							notas[3], notas[2], notas[1], notas[0]);
+					return ResponseEntity.ok().body(retorno);
 
-			} else {
+				} else {
 //				System.out.println("VALOR INDISPONÍVEL, PROCURE OUTRO CAIXA");
-				/*
-				 * EXCEÇÃO ERRO 300 - "mensagem": " VALOR INDISPONÍVEL, PROCURE OUTRO CAIXA"
-				 */
-				throw new SaqueExcecao(" VALOR INDISPONÍVEL, PROCURE OUTRO CAIXA");
+					/*
+					 * EXCEÇÃO ERRO 300 - "mensagem": " VALOR INDISPONÍVEL, PROCURE OUTRO CAIXA"
+					 */
+					throw new SaqueExcecao(" VALOR INDISPONÍVEL, PROCURE OUTRO CAIXA");
 
+				}
+			} else {
+				throw new SaqueExcecao("VALOR NÃO É INTEIRO", 408);// 408 - quando valor for quebrado. O
+																					// valor não é inteiro
 			}
 
 		} else {

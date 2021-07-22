@@ -163,19 +163,19 @@ public class Caixa {
 	 * @return void.
 	 */
 	public boolean saque(Double valor) {
-		if (valorSuficienteCaixa(valor) && verificarCasaDecimal(valor)) {
+		if (valorSuficienteCaixa(valor) && verificarCasaDecimal(valor) && valor >= 2) {
 			int[] quantNotas = calcularCedulas(valor);
 			if (quantNotas != null) {
 				subtrairCedulas(quantNotas);
-				System.out.println("SAQUE REALIZADO.");
+//				System.out.println("SAQUE REALIZADO.");
 				return true;
 			} else {
-				System.out.println("QUANTIDADE DE CÉDULAS NÃO É O SUFICIENTE PARA ESSA OPERAÇÃO.");
+//				System.out.println("QUANTIDADE DE CÉDULAS NÃO É O SUFICIENTE PARA ESSA OPERAÇÃO.");
 				return false;
 			}
 
 		} else {
-			 System.out.println(" VALOR INDISPONÍVEL, PROCURE OUTRO CAIXA."); 
+//			 System.out.println(" VALOR INDISPONÍVEL, PROCURE OUTRO CAIXA."); 
 			return false;
 		}
 
@@ -250,7 +250,7 @@ public class Caixa {
 	 * 
 	 * @return boolean. Verifica se o valor tem casas decimais igual a 0.
 	 */
-	private boolean verificarCasaDecimal(Double valor) {
+	public boolean verificarCasaDecimal(Double valor) {
 		double num = valor;
 		double decimal = num % 1;
 		if (decimal != 0) {

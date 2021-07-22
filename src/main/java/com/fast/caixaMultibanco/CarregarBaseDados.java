@@ -1,8 +1,5 @@
 package com.fast.caixaMultibanco;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.List;
 
 import org.slf4j.Logger;

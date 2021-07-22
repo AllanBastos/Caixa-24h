@@ -11,9 +11,16 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.fast.caixaMultibanco.services.excecoes.AcessoExcecao;
 import com.fast.caixaMultibanco.services.excecoes.LoginExcecao;
+import com.fast.caixaMultibanco.services.excecoes.RecursoNaoEncontradoExcecao;
 import com.fast.caixaMultibanco.services.excecoes.SaqueExcecao;
 import com.fast.caixaMultibanco.services.excecoes.TempoExpiradoException;
-import com.fast.caixaMultibanco.services.excecoes.RecursoNaoEncontradoExcecao;
+ 
+/**
+ * Classe de exceção
+ * 
+ * @author allan
+ * @version 0.1.0
+ */
 
 @ControllerAdvice
 public class ManipuladorExcecaoRecurso {
@@ -38,7 +45,13 @@ public class ManipuladorExcecaoRecurso {
 	
 	@ExceptionHandler(SaqueExcecao.class)
 	public ResponseEntity<Object> ErroAplicação(SaqueExcecao e, HttpServletRequest request ){
-		HttpStatus status = HttpStatus.MULTIPLE_CHOICES;	
+		HttpStatus status;
+		if (e.tipo == 1) {			
+			status = HttpStatus.MULTIPLE_CHOICES;	
+		}else {
+			 status = HttpStatus.valueOf(e.tipo);		
+		}
+
 		String error = "Falha no saque";
 		ErroPadrao err = new ErroPadrao(Instant.now(), status.value(), error, e.getMessage(),  request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
@@ -52,13 +65,6 @@ public class ManipuladorExcecaoRecurso {
 		return ResponseEntity.status(status).body(err);
 	}
 	
-	@ExceptionHandler(RuntimeException.class)
-	public ResponseEntity<Object> ErroAplicação(RuntimeException e, HttpServletRequest request ){
-		String error = "Erro na aplicação";
-		HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;	
-		ErroPadrao err = new ErroPadrao(Instant.now(), status.value(), error, e.getMessage(),  request.getRequestURI());
-		return ResponseEntity.status(status).body(err);
-	}
 	
 	@ExceptionHandler(LoginExcecao.class)
 	public ResponseEntity<ErroPadrao> LoginExcecao(LoginExcecao e, HttpServletRequest request ){
@@ -68,4 +74,11 @@ public class ManipuladorExcecaoRecurso {
 		return ResponseEntity.status(status).body(err);
 	}
 	
+	@ExceptionHandler(RuntimeException.class)
+	public ResponseEntity<Object> ErroAplicação(RuntimeException e, HttpServletRequest request ){
+		String error = "Erro na aplicação";
+		HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;	
+		ErroPadrao err = new ErroPadrao(Instant.now(), status.value(), error, e.getMessage(),  request.getRequestURI());
+		return ResponseEntity.status(status).body(err);
+	}
 }
