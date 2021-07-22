@@ -3,6 +3,8 @@
  */
 package com.fast.caixaMultibanco.recursos;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.time.Instant;
 import java.util.List;
 import java.util.Locale;
@@ -215,6 +217,9 @@ public class OperacoesController {
 	@PostMapping("/transferencia")
 	ResponseEntity<AuxTransferenciaRetorno> transferencia(@RequestBody AuxTransferencia auxTranferencia) {
 		Cliente cliente = validarAcesso(auxTranferencia.getAcesso()).getCliente();
+		DecimalFormat deci = new DecimalFormat("0.00");
+        deci.setRoundingMode(RoundingMode.DOWN);
+		auxTranferencia.setValor(Double.valueOf(deci.format(auxTranferencia.getValor().doubleValue())));
 		if (auxTranferencia.getValor() > 0) {
 			if (cliente.getSaldo() >= auxTranferencia.getValor()) {
 				Cliente cliente_destino = auxTranferencia.contaDestino(this.clienteServico.findAll(),
