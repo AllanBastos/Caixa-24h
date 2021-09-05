@@ -1,0 +1,112 @@
+{
+    "login": "Allan.test",
+    "senha": "Allan",
+    "caixa": 1,
+    "conta": "BCTT-00001-202110001"
+
+}
+{
+    "login": "Francisco.test",
+    "senha": "Francisco",
+    "caixa": 1,
+    "conta": "BCTT-00001-202110002"
+
+}
+{
+    "login": "Matheus.test",
+    "senha": "Matheus",
+    "caixa": 1,
+    "conta": "BCTT-00001-202110003"
+
+}
+{
+    "login": "Maurilio.test",
+    "senha": "Maurilio",
+    "caixa": 1,
+    "conta": "BCTT-00001-202110004"
+
+}
+{
+    "login": "Thiago.test",
+    "senha": "Thiago",
+    "caixa": 1,
+    "conta": "BCTT-00001-202110005"
+
+}
+{
+    "login": "Raphael.test",
+    "senha": "Raphael",
+    "caixa": 1,
+    "conta": "BCTT-00001-202110006"
+
+}
+{
+    "login": "Eustakio.test",
+    "senha": "Eustakio",
+    "caixa": 1,
+    "conta": "BCTT-00001-202110007"
+
+}
+{
+    "login": "Alfredo.test",
+    "senha": "Alfredo",
+    "caixa": 1,
+    "conta": "BCTT-00001-202110008"
+
+}
+{
+    "login": "Jeronimo.test",
+    "senha": "Jeronimo",
+    "caixa": 1,
+    "conta": "BCTT-00001-202110009"
+
+}
+{
+    "login": "Heitor.test",
+    "senha": "Heitor",
+    "caixa": 1,
+    "conta": "BCTT-00001-202110010"
+
+}
+{
+    "login": "Daniel.test",
+    "senha": "Daniel",
+    "caixa": 1,
+    "conta": "BCTT-00001-202110011"
+
+}
+{
+    "login": "Jonathan.test",
+    "senha": "Jonathan",
+    "caixa": 1,
+    "conta": "BCTT-00001-202110012"
+
+}
+{
+    "login": "Neemias.test",
+    "senha": "Neemias",
+    "caixa": 1,
+    "conta": "BCTT-00001-202110013"
+
+}
+{
+    "login": "Gusta.test",
+    "senha": "Gusta",
+    "caixa": 1,
+    "conta": "BCTT-00001-202110014"
+
+}
+{
+    "login": "Samuca.test",
+    "senha": "Samuca",
+    "caixa": 1,
+    "conta": "BCTT-00001-202110015"
+
+}
+{
+    "login": "Alisson.test",
+    "senha": "Alisson",
+    "caixa": 1,
+    "conta": "BCTT-00001-202110016"
+
+}
